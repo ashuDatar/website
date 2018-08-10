@@ -438,15 +438,11 @@ DashServer.layout = html.Div([
 
 
 @DashServer.callback(
-
     dash.dependencies.Output('example-graph', 'figure'),
-
     [dash.dependencies.Input('chart_type', 'value'),    
     dash.dependencies.Input('signal', 'children'),
-    dash.dependencies.Input('url', 'pathname')
-    ])
-
-def update_output(chart_type, signal,pathname):
+    dash.dependencies.Input('url', 'pathname')])
+def update_output(chart_type, signal, pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
@@ -458,11 +454,8 @@ def update_output(chart_type, signal,pathname):
     x_axis = 'Date'
     y_axis = filter
     layout = create_layout(x_axis,y_axis)
-
     figure = {'data': dataPanda,
-
             'layout': layout}
-
     return figure  
 
   

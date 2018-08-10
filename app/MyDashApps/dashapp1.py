@@ -446,14 +446,16 @@ DashServer.layout = html.Div([
     dash.dependencies.Input('url', 'pathname')
     ])
 
-def update_output(chart_type, signal):
-    
-    data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Number of functioning offices of scheduled commercial banks as of end of period')
+def update_output(chart_type, signal,pathname):
+    des = str(pathname)
+    filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
+    data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == filter)
     file = pd.read_sql(data.statement, data.session.bind)
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
     dataPanda = select_chart(x_axis,y_axis,chart_type, file)
-    x_axis = 'Number of functioning offices of scheduled commercial banks as of end of period'
+    x_axis = filter
     y_axis = 'Date'
     layout = create_layout(x_axis,y_axis)
 

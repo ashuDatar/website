@@ -17,14 +17,14 @@ import urllib
 # In[2]:
 
 
-#data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Number of functioning offices of scheduled commercial banks as of end of period')
-#file = pd.read_sql(data.statement, data.session.bind)
+data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Outstanding loans of Scheduled commercial banks  in semi urban areas')
+file = pd.read_sql(data.statement, data.session.bind)
 
-#file = pd.read_csv( "Test_Data_Dummy_Data.csv", encoding = "ISO-8859-1")
+file = pd.read_csv( "Test_Data_Dummy_Data.csv", encoding = "ISO-8859-1")
 
-#file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
+file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
 
-#file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
+file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
 
 
 
@@ -35,7 +35,7 @@ import urllib
 
 
 
-def select_chart(x_axis,y_axis,chart_type, file) :
+def select_chart(x_axis,y_axis,chart_type) :
 
     data_chart = file
 
@@ -448,7 +448,7 @@ def update_output(chart_type, signal, pathname):
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
     x_axis = 'Date'
     y_axis = filter
-    dataPanda = select_chart(x_axis,y_axis,chart_type, file)
+    dataPanda = select_chart(x_axis,y_axis,chart_type)
     layout = create_layout(x_axis,y_axis)
     figure = {'data': dataPanda,
             'layout': layout}

@@ -11,6 +11,7 @@ import plotly.graph_objs as go
 from flask import Flask, render_template
 from app.server import db
 from app.models import test_data_dummy_data
+import urllib
 
 
 # In[2]:
@@ -440,12 +441,12 @@ DashServer.layout = html.Div([
 
     dash.dependencies.Output('example-graph', 'figure'),
 
-    [dash.dependencies.Input('chart_type', 'value'),
-    
-    dash.dependencies.Input('signal', 'children')    
+    [dash.dependencies.Input('chart_type', 'value'),    
+    dash.dependencies.Input('signal', 'children'),
+    dash.dependencies.Input('url', 'pathname')
     ])
 
-def update_output(x_axis, y_axis, chart_type, signal):
+def update_output(chart_type, signal):
     
     data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Number of functioning offices of scheduled commercial banks as of end of period')
     file = pd.read_sql(data.statement, data.session.bind)

@@ -17,15 +17,6 @@ import urllib
 # In[2]:
 
 
-data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Outstanding loans of Scheduled commercial banks  in semi urban areas')
-file = pd.read_sql(data.statement, data.session.bind)
-
-file = pd.read_csv( "Test_Data_Dummy_Data.csv", encoding = "ISO-8859-1")
-
-file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
-
-file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
-
 
 
 
@@ -35,7 +26,7 @@ file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
 
 
 
-def select_chart(x_axis,y_axis,chart_type) :
+def select_chart(x_axis,y_axis,chart_type,file) :
 
     data_chart = file
 
@@ -67,7 +58,7 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda):
 
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) : 
 
-    x=data_chart[data_chart['Metric'] == y_axis]['Date']
+    x=data_chart[data_chart['Description'] == y_axis]['Date']
 
     if (chart_type == 'scatter'): 
 
@@ -77,7 +68,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                     x=x,
 
-                    y=data_chart[data_chart['Metric'] == y_axis][i],
+                    y=data_chart[data_chart['Description'] == y_axis][i],
 
                     text= i,
 
@@ -107,7 +98,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                             x=x,
 
-                            y=data_chart[data_chart['Metric'] == y_axis][i],
+                            y=data_chart[data_chart['Description'] == y_axis][i],
 
                             text= i,
 
@@ -129,7 +120,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                             x=x,
 
-                            y=data_chart[data_chart['Metric'] == y_axis][i],
+                            y=data_chart[data_chart['Description'] == y_axis][i],
 
                             text= i,
 
@@ -151,9 +142,9 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                 trace = go.Scatter(
 
-                    x=data_chart[data_chart['Metric'] == x_axis][i],
+                    x=data_chart[data_chart['Description'] == x_axis][i],
 
-                    y=data_chart[data_chart['Metric'] == y_axis][i],
+                    y=data_chart[data_chart['Description'] == y_axis][i],
 
                     text= i,
 
@@ -181,9 +172,9 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                     trace = go.Scatter(
 
-                                x=data_chart[data_chart['Metric'] == x_axis][i],
+                                x=data_chart[data_chart['Description'] == x_axis][i],
 
-                                y=data_chart[data_chart['Metric'] == y_axis][i],
+                                y=data_chart[data_chart['Description'] == y_axis][i],
 
                                 text= i,
 
@@ -203,9 +194,9 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
                             trace = go.Bar(
 
-                                    x=data_chart[data_chart['Metric'] == x_axis][i],
+                                    x=data_chart[data_chart['Description'] == x_axis][i],
 
-                                    y=data_chart[data_chart['Metric'] == y_axis][i],
+                                    y=data_chart[data_chart['Description'] == y_axis][i],
 
                                     text= i,
 

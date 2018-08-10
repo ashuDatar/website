@@ -254,11 +254,11 @@ def create_layout(x_axis,y_axis) :
 
 
 
-x_axis_list = file['Metric'].unique().tolist()
+#x_axis_list = file['Metric'].unique().tolist()
 
-y_axis_list = file['Metric'].unique().tolist()
+#y_axis_list = file['Metric'].unique().tolist()
 
-x_axis_list.append('Date')
+#x_axis_list.append('Date')
 
 
 
@@ -368,51 +368,7 @@ DashServer.layout = html.Div([
 
         [
 
-            html.P('Choose x-axis:'), 
-
-            dcc.Dropdown(
-
-                    id='x_axis',
-
-                    options=[{'label': k, 'value': k} for k in x_axis_list],               
-
-                    value='Date'
-
-                        )
-
-            ],
-
-           className='four columns',
-
-           style={'margin-top': '10'}
-
-     ),
-
-    
-
-    html.Div(
-
-        [
-
-            html.P('Choose y-axis:'), 
-
-            dcc.Dropdown(
-
-                    id='y_axis',
-
-                    options=[{'label': k, 'value': k} for k in y_axis_list],               
-
-                    value='Scheduled Commercial  Bank Offices'
-
-                        )
-
-            ],
-
-           className='four columns',
-
-           style={'margin-top': '10'}
-
-     ),
+        
 
     
 
@@ -484,11 +440,7 @@ DashServer.layout = html.Div([
 
     dash.dependencies.Output('example-graph', 'figure'),
 
-    [dash.dependencies.Input('x_axis', 'value'),
-
-    dash.dependencies.Input('y_axis', 'value'),
-
-    dash.dependencies.Input('chart_type', 'value'),
+    [dash.dependencies.Input('chart_type', 'value'),
     
     dash.dependencies.Input('signal', 'children')    
     ])
@@ -500,7 +452,8 @@ def update_output(x_axis, y_axis, chart_type, signal):
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
     dataPanda = select_chart(x_axis,y_axis,chart_type, file)
-
+    x_axis = 'Number of functioning offices of scheduled commercial banks as of end of period'
+    y_axis = 'Date'
     layout = create_layout(x_axis,y_axis)
 
     figure = {'data': dataPanda,

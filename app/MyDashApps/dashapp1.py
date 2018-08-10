@@ -439,7 +439,7 @@ def update_output(chart_type, signal, pathname):
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
     x_axis = 'Date'
     y_axis = filter
-    dataPanda = select_chart(x_axis,y_axis,chart_type)
+    dataPanda = select_chart(x_axis,y_axis,chart_type,file)
     layout = create_layout(x_axis,y_axis)
     figure = {'data': dataPanda,
             'layout': layout}

@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_mysqldb import MySQL
-from flask_migrate import Migrate
+#from flask_migrate import Migrate
 from dash import Dash
 from dash.dependencies import Input, State, Output
 import dash_core_components as dcc
@@ -24,7 +24,7 @@ babel.init_app(AppServer)
 db.init_app(AppServer)
 AppServer.elasticsearch = Elasticsearch([AppServer.config['ELASTICSEARCH_URL']]) \
        if AppServer.config['ELASTICSEARCH_URL'] else None
-migrate = Migrate(AppServer, db)
+#migrate = Migrate(AppServer, db)
 
 from app import routes, models
 

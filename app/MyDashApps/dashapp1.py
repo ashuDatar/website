@@ -403,11 +403,12 @@ DashServer.layout = html.Div([
     [dash.dependencies.Input('chart_type', 'value'),
     dash.dependencies.Input('url', 'pathname'),
     ])
+
 def update_output(chart_type, pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
-    #data = db.session.query(test_data_dummy_data)
+    #data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Outstanding loans of Scheduled commercial banks  in semi urban areas')
     #file = pd.read_sql(data.statement, data.session.bind)
     file = pd.read_csv('Test_Data_Dummy_Data.csv')
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
@@ -417,10 +418,10 @@ def update_output(chart_type, pathname):
     dataPanda = select_chart(x_axis,y_axis,chart_type,file)
     layout = create_layout(x_axis,y_axis)
     figure = {'data': dataPanda,
-            'layout': layout}
+              'layout': layout}
     return figure  
 
-  
+
 layout = DashServer.layout
 
     

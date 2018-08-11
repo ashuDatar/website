@@ -92,7 +92,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
         if (chart_type == 'line'): 
 
-            for i in data_chart.iloc[:,14:50].columns.unique():
+            for i in data_chart.iloc[:,15:51].columns.unique():
 
                     trace = go.Scatter(
 
@@ -322,33 +322,7 @@ DashServer.layout = html.Div([
 
         [
 
-             html.Label('What would you like to visualize?'),
-
-                 dcc.Dropdown(
-                    id='fliter',
-                    options=[
-
-                        {'label': 'Economy', 'value': 'NYC'},
-
-                        {'label': 'Banking', 'value': 'MTL'},
-
-                        {'label': 'States', 'value': 'SF'}
-
-                            ],
-
-                     value=['MTL', 'SF'],
-
-                     multi=True
-
-                             ),
-
-         ], 
-
-         className='row'
-
-        ),
-
-    
+  
 
     # selectors
 

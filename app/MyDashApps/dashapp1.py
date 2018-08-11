@@ -316,13 +316,7 @@ DashServer.layout = html.Div([
 
     # Select visualization
 
-    
-
-     html.Div(
-
-        [
-
-  
+   
 
     # selectors
 

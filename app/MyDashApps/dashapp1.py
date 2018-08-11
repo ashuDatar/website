@@ -426,10 +426,10 @@ DashServer.layout = html.Div([
 
 @DashServer.callback(
     dash.dependencies.Output('example-graph', 'figure'),
-    [dash.dependencies.Input('chart_type', 'value'),    
-    dash.dependencies.Input('signal', 'children'),
-    dash.dependencies.Input('url', 'pathname')])
-def update_output(chart_type, signal, pathname):
+    [dash.dependencies.Input('chart_type', 'value'),
+    dash.dependencies.Input('url', 'pathname'),
+    ])
+def update_output(chart_type, pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)

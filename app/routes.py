@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for, request, g , curren
 #from app import server
 from flask import g
 from flask_babel import _, get_locale
-from app.models import test_data_dummy_data, search_index
+from app.models import search_index
 from app.forms import SearchForm, resultForm
 from app.search import add_to_index
 from app.MyDashApps import dashapp0

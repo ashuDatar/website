@@ -6,6 +6,7 @@ import dash_core_components as dcc
 import urllib
 from app.server import db
 from app.models import test_data_dummy_data
+import pandas as pd
 
 DashServer.layout = html.Div([
 html.Div(id='graph-1')

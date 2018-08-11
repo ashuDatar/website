@@ -433,8 +433,9 @@ def update_output(chart_type, pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
-    data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Outstanding loans of Scheduled commercial banks  in semi urban areas')
-    file = pd.read_sql(data.statement, data.session.bind)
+    #data = db.session.query(test_data_dummy_data).filter(test_data_dummy_data.Description == 'Outstanding loans of Scheduled commercial banks  in semi urban areas')
+    #file = pd.read_sql(data.statement, data.session.bind)
+    file = pd.read_csv('C:\\Users\\Pranoti\\statesofindia\\website\Test_Data_Dummy_Data.csv')
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
     file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
     x_axis = 'Date'

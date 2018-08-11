@@ -12,7 +12,7 @@ import sys,os
 #def make_shell_context():
  #   return {'db': db, 'test_data_dummy_data': test_data_dummy_data, 'search_index': search_index}
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+#sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 #myApp = DispatcherMiddleware(AppServer,{'/app': webServer})
 

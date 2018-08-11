@@ -1,2 +1,2 @@
-web: waitress-serve --port=$PORT website.wsgi:AppServer
+ web: python website.py
 

@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    #ELASTICSEARCH_URL= 'http://localhost:9200'
+    ELASTICSEARCH_URL= 'https://nol0b9gns3:pfh02ezorl@state-8851386751.us-west-2.bonsaisearch.net'
     MYSQL_HOST = 'us-cdbr-iron-east-01.cleardb.net'
     MYSQL_USER = 'b52f569efaaf0b'
     MYSQL_PASSWORD = '8e4e9d41'

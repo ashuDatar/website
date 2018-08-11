@@ -3,7 +3,7 @@
 from app.server import AppServer
 #from app.webroutes import webServer
 from app.Dashserver import DashServer
-#import sys,os
+import os
 #from app.models import test_data_dummy_data, search_index
 
 
@@ -17,7 +17,7 @@ from app.Dashserver import DashServer
 #myApp = DispatcherMiddleware(AppServer,{'/app': webServer})
 
 if __name__ == '__main__':
-   DashServer.run_server(debug=True)
-   #run_simple('127.0.0.1', 5000, myApp, use_reloader=True, use_debugger=True)
+   port = int(os.environ.get('PORT', 5000))
+   AppServer.run(host='0.0.0.0', port=port, debug=True)
   
 

@@ -62,7 +62,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
     if (chart_type == 'scatter'): 
 
-            for i in data_chart.iloc[:,15:51].columns.unique():
+            for i in data_chart.iloc[:,16:52].columns.unique():
 
                 trace = go.Scatter(
 
@@ -138,7 +138,7 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
     if (chart_type == 'scatter'): 
 
-            for i in data_chart.iloc[:,15:51].columns.unique():
+            for i in data_chart.iloc[:,16:52].columns.unique():
 
                 trace = go.Scatter(
 
@@ -168,7 +168,7 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
         if (chart_type == 'line'): 
 
-            for i in data_chart.iloc[:,15:51].columns.unique():
+            for i in data_chart.iloc[:,16:52].columns.unique():
 
                     trace = go.Scatter(
 
@@ -190,7 +190,7 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda) :
 
             if (chart_type == 'bar'): 
 
-                    for i in data_chart.iloc[:,15:51].columns.unique():
+                    for i in data_chart.iloc[:,16:52].columns.unique():
 
                             trace = go.Bar(
 
@@ -404,8 +404,8 @@ def update_output(chart_type, pathname):
     data = db.session.query(test_data_dummy_data)
     file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : x.astype('float'))
-    file.iloc[:,15:51] = file.iloc[:,15:51].apply(lambda x : round(x, 2))
+    file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
+    file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
     x_axis = 'Date'
     y_axis = filter
     dataPanda = select_chart(x_axis,y_axis,chart_type,file)

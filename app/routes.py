@@ -65,7 +65,7 @@ def visualization(description):
 
 
 
-DashServer.layout = html.Div([	dcc.Location(id='url', refresh=False),	dcc.Input(id='description', type='text'),			      
+DashServer.layout = html.Div([	dcc.Location(id='url', refresh=False),			      
                                 html.Div(id='signal', style={'display': 'none'}),
 			              html.Div(id='page-content')])
 

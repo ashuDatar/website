@@ -280,7 +280,7 @@ DashServer.layout = html.Div([
 
             html.H1(
 
-                'States of India',
+                'States of India - Explore states of India ',
 
                 style={'font-family': 'Helvetica',
 

@@ -401,7 +401,7 @@ def update_data():
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    return file  
+    return file.to_json(date_format='iso', orient='split')  
 
 
 @DashServer.callback(
@@ -410,7 +410,7 @@ def update_data():
      dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input('dataframe', 'children'),
     ])
-def update_output(chart_type, pathname,dataframe):
+def update_output(chart_type, pathname,jsonified_cleaned_data):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
@@ -419,7 +419,7 @@ def update_output(chart_type, pathname,dataframe):
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    file = dataframe
+    file = pd.read_json(jsonified_cleaned_data, orient='split')
     x_axis = 'Date'
     y_axis = filter
     dataPanda = select_chart(x_axis,y_axis,chart_type,file)

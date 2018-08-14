@@ -313,7 +313,7 @@ DashServer.layout = html.Div([
         ),
 
     
-
+    html.Div(id='dataframe', style={'display': 'none'}),  
     # Select visualization
 
    
@@ -392,20 +392,34 @@ DashServer.layout = html.Div([
 
 
 
+
 @DashServer.callback(
-    dash.dependencies.Output('example-graph', 'figure'),
-    [dash.dependencies.Input('chart_type', 'value'),
-    dash.dependencies.Input('url', 'pathname'),
-    ])
-def update_output(chart_type, pathname):
-    des = str(pathname)
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
+    dash.dependencies.Output('dataframe', 'children'))
+def update_data():
     data = db.session.query(test_data_dummy_data)
     file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
-    file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
+    file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
+    file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
+    return file  
+
+
+@DashServer.callback(
+    dash.dependencies.Output('example-graph', 'figure'),
+    [dash.dependencies.Input('chart_type', 'value'),
+     dash.dependencies.Input('url', 'pathname'),
+     dash.dependencies.Input('dataframe', 'children'),
+    ])
+def update_output(chart_type, pathname,dataframe):
+    des = str(pathname)
+    filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
+    #data = db.session.query(test_data_dummy_data)
+    #file = pd.read_sql(data.statement, data.session.bind)
+    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
+    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
+    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
+    file = dataframe
     x_axis = 'Date'
     y_axis = filter
     dataPanda = select_chart(x_axis,y_axis,chart_type,file)

@@ -183,9 +183,10 @@ DashServer.layout = html.Div([
     # Select visualization
 
 
-     html.Div( dt.DataTable(id='datatable', rows=[{}]) , style={'display': 'none'}),  
+     html.Div( dt.DataTable(id='datatable', rows=[{}]) #, style={'display': 'none'}
+             ),  
     
-     html.Div(id='text'),
+    # html.Div(id='text'),
     
      #dcc.Location(id='url', refresh=False),
     
@@ -213,15 +214,15 @@ DashServer.layout = html.Div([
    ),
 
   #chart
-    html.Div(
-       [
-          dcc.Graph(id='example-graph',
+   # html.Div(
+   #    [
+   #       dcc.Graph(id='example-graph',
                               #animate=True, 
-                            style={'margin-top': '20'},
-                             config={'displayModeBar': False}
-                   )
-        ], className='row'
-         ),
+   #                         style={'margin-top': '20'},
+   #                          config={'displayModeBar': False}
+   #                )
+   #     ], className='row'
+   #      ),
 
     dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)')
 ], className='ten columns offset-by-one')    
@@ -252,47 +253,6 @@ def update_data(chart_type):
     return cleaned_df
 
 
-@DashServer.callback(
-    dash.dependencies.Output('text', 'children'),
-    [dash.dependencies.Input('chart_type', 'value'),
-     dash.dependencies.Input('datatable', 'rows'),
-    ])
-def update_output(chart_type, rows):
-    description = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
-    file = pd.DataFrame(rows)
-    category = file[file['Description'] == description].Category.unique()
-    source = file[file['Description'] == description].Source.unique()
-    return html.Div([
-        html.H3('Visualization for {}'.format(description)),
-        html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source))
-         ])
-
-@DashServer.callback(
-    dash.dependencies.Output('example-graph', 'figure'),
-    [dash.dependencies.Input('chart_type', 'value'),
-     dash.dependencies.Input('datatable', 'rows'),
-     dash.dependencies.Input('url', 'pathname')
-    ])
-def update_output(chart_type, rows, pathname):
-    des = str(pathname)
-    #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
-    #data = db.session.query(test_data_dummy_data)
-    #file = pd.read_sql(data.statement, data.session.bind)
-    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
-    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    #file = pd.DataFrame.from_dict(datatable, orient='index')
-    file = pd.DataFrame(rows)
-    x_axis = 'Date'
-    y_axis = filter
-    dataPanda = select_chart(x_axis,y_axis,chart_type,file)
-    layout = create_layout(x_axis,y_axis)
-    figure = {'data': dataPanda,
-              'layout': layout}
-    return figure
 
 
 layout = DashServer.layout

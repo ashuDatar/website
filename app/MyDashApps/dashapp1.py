@@ -247,7 +247,9 @@ DashServer.title = 'States of India'
 def update_output(chart_type, pathname):
     description = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     #file = pd.DataFrame(rows)
-    file = pd.read_csv('Test_Data_Dummy_Data.csv')
+    data = db.session.query(test_data_dummy_data)
+    file = pd.read_sql(data.statement, data.session.bind)
+    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     category = file[file['Description'] == description].Category.unique()
     source = file[file['Description'] == description].Source.unique()
     return html.Div([

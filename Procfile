@@ -1,2 +1,2 @@
- web: python website.py
-
+ #web: python website.py
+ web: gunicorn website:AppServer

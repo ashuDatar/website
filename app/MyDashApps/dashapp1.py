@@ -398,9 +398,9 @@ DashServer.layout = html.Div([
 @DashServer.callback(
     dash.dependencies.Output('datatable', 'rows'))
 def update_data():
-    data = db.session.query(test_data_dummy_data)
-    file = pd.read_sql(data.statement, data.session.bind)
-    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
+    #data = db.session.query(test_data_dummy_data)
+    #file = pd.read_sql(data.statement, data.session.bind)
+    file = pd.read_csv('Test_Data_Dummy_Data.csv')
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
     cleaned_df = file.to_dict('records')

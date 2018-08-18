@@ -313,7 +313,9 @@ DashServer.layout = html.Div([
         ),
 
     
-    html.Div(id='dataframe', style={'display': 'none'}),  
+    
+     html.Div( dt.DataTable(id='datatable', rows=[{}]) , style={'display': 'none'}),  
+    
     # Select visualization
 
    

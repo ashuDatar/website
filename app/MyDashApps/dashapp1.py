@@ -12,7 +12,7 @@ from flask import Flask, render_template
 from app.server import db
 from app.models import test_data_dummy_data
 import urllib
-#import dash_table_experiments as dt
+import dash_table_experiments as dt
 
 # In[2]:
 
@@ -183,7 +183,7 @@ DashServer.layout = html.Div([
     # Select visualization
 
 
-    # html.Div( dt.DataTable(id='datatable', rows=[{}]) #, style={'display': 'none'} ),  
+    html.Div( dt.DataTable(id='datatable', rows=[{}]) ),  
     
      html.Div(id='text'),
     
@@ -259,7 +259,19 @@ def update_output(chart_type, pathname):
          ])
 
 
-
+@DashServer.callback(
+    dash.dependencies.Output('datatable', 'rows'),
+    [dash.dependencies.Input('chart_type', 'value'),
+     dash.dependencies.Input('url', 'pathname') ])
+def update_data(chart_type, pathname):
+    #data = db.session.query(test_data_dummy_data)
+    #file = pd.read_sql(data.statement, data.session.bind)
+    file = pd.read_csv('Test_Data_Dummy_Data.csv')
+    file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
+    file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
+    cleaned_df = file.to_dict('records')
+    #dataframe = file.to_json(date_format='iso', orient='split')
+    return cleaned_df
 
 layout = DashServer.layout
 

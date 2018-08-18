@@ -1,6 +1,7 @@
 #from werkzeug.wsgi import DispatcherMiddleware
 #from werkzeug.serving import run_simple
-from app.server import AppServer
+#from app.server import AppServer
+from app import AppServer
 #from app.webroutes import webServer
 from app.Dashserver import DashServer
 #import os

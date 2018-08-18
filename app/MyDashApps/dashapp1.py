@@ -394,21 +394,22 @@ DashServer.layout = html.Div([
 
 
 @DashServer.callback(
-    dash.dependencies.Output('dataframe', 'children'))
+    dash.dependencies.Output('datatable', 'rows'))
 def update_data():
     data = db.session.query(test_data_dummy_data)
     file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     file.iloc[:,16:52] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    return file.to_json(date_format='iso', orient='split')  
+    cleaned_df = file.to_dict('records')
+    return cleaned_df 
 
 
 @DashServer.callback(
     dash.dependencies.Output('example-graph', 'figure'),
     [dash.dependencies.Input('chart_type', 'value'),
      dash.dependencies.Input('url', 'pathname'),
-     dash.dependencies.Input('dataframe', 'children'),
+     dash.dependencies.Input('datatable', 'rows'),
     ])
 def update_output(chart_type, pathname,jsonified_cleaned_data):
     des = str(pathname)
@@ -419,7 +420,7 @@ def update_output(chart_type, pathname,jsonified_cleaned_data):
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    file = pd.read_json(jsonified_cleaned_data, orient='split')
+    file = pd.DataFrame(rows)
     x_axis = 'Date'
     y_axis = filter
     dataPanda = select_chart(x_axis,y_axis,chart_type,file)

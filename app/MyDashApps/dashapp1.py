@@ -413,7 +413,7 @@ DashServer.layout = html.Div([
      dash.dependencies.Input('url', 'pathname'),
     # dash.dependencies.Input('datatable', 'rows'),
     ])
-def update_output(chart_type, pathname,jsonified_cleaned_data):
+def update_output(chart_type, pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)

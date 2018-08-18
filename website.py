@@ -3,7 +3,6 @@
 from app.server import AppServer
 #from app.webroutes import webServer
 from app.Dashserver import DashServer
-from waitress import serve
 #import os
 #from app.models import test_data_dummy_data, search_index
 
@@ -19,8 +18,7 @@ from waitress import serve
 
 if __name__ == '__main__':
    #AppServer.run(debug=True, use_reloader=True)
-   server(AppServer) 
-   #port = int(os.environ.get('PORT', 5000))
-   #AppServer.run(host='0.0.0.0', port=port, debug=True)
+   port = int(os.environ.get('PORT', 5000))
+   AppServer.run(host='0.0.0.0', port=port, debug=True)
   
 

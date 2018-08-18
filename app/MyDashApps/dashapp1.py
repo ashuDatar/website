@@ -241,8 +241,8 @@ DashServer.css.append_css({'external_url':
 DashServer.title = 'States of India'
 
 @DashServer.callback(
-    dash.dependencies.Output('datatable', 'rows'),[dash.dependencies.Input('chart_type', 'value')])
-def update_data(chart_type):
+    dash.dependencies.Output('datatable', 'rows'),[dash.dependencies.Input('chart_type', 'value'),dash.dependencies.Input('chart_type', 'value'),dash.dependencies.Input('url', 'pathname') ])
+def update_data(chart_type, pathname):
     #data = db.session.query(test_data_dummy_data)
     #file = pd.read_sql(data.statement, data.session.bind)
     file = pd.read_csv('Test_Data_Dummy_Data.csv')

@@ -21,7 +21,7 @@ AppServer.config.from_object(Config)
 db = SQLAlchemy(AppServer)
 babel = Babel()
 babel.init_app(AppServer)
-db.init_app(AppServer)
+#db.init_app(AppServer)
 #AppServer.elasticsearch = Elasticsearch([AppServer.config['ELASTICSEARCH_URL']]) \
 #       if AppServer.config['ELASTICSEARCH_URL'] else None
 

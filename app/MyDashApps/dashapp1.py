@@ -145,7 +145,7 @@ def create_layout(x_axis,y_axis) :
 
                 xaxis = dict(title= 'Date'),
 
-                yaxis=dict(title='Outstanding loans of Scheduled commercial banks  in semi urban areas'),
+                yaxis=dict(title=y_axis),
 
                 #legend=dict(orientation="h"),
                
@@ -245,15 +245,17 @@ DashServer.title = 'States of India'
      dash.dependencies.Input('url', 'pathname')
     ])
 def update_output(chart_type, pathname):
-    description = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
+    des = str(pathname)
+    filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
     #file = pd.DataFrame(rows)
     data = db.session.query(test_data_dummy_data)
     file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    category = file[file['Description'] == description].Category.unique()
-    source = file[file['Description'] == description].Source.unique()
+    category = file[file['Description'] == filter].Category.unique()
+    source = file[file['Description'] == filter].Source.unique()
     return html.Div([
-        html.H3('Visualization for {}'.format(description)),
+        html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
         html.H6('Source:{}'.format(source))
          ])

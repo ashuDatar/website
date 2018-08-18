@@ -265,7 +265,7 @@ def update_output(chart_type, pathname):
      #dash.dependencies.Input('datatable', 'rows'),
      dash.dependencies.Input('url', 'pathname')
     ])
-def update_output(chart_type, rows, pathname):
+def update_output(chart_type, pathname):
     des = str(pathname)
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]

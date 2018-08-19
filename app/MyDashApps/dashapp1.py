@@ -26,17 +26,13 @@ import urllib
 
 
 
-def select_chart(x_axis,y_axis,chart_type,file) :
+def select_chart(x_axis,y_axis,chart_type,file,state) :
     data_chart = file
     dataPanda = []
-    state_list = ['CHANDIGARH', 'HARYANA', 'HIMACHAL_PRADESH', 'JAMMU_KASHMIR','NCT_OF_DELHI','PUNJAB','RAJASTHAN',
-                  'ARUNACHAL_PRADESH','ASSAM','MANIPUR','MEGHALAYA','MIZORAM','NAGALAND','TRIPURA','ANDAMAN_NICOBAR_ISLANDS',
-                  'BIHAR','JHARKHAND','ODISHA','SIKKIM','WEST_BENGAL','CHHATTISGARH','MADHYA_PRADESH','UTTARAKHAND',
-                  'UTTAR_PRADESH','DADRANAGAR_HAVELI','DAMAN_DIU','GOA','GUJARAT','MAHARASHTRA','ANDHRA_PRADESH',
-                  'KARNATAKA','KERALA','LAKSHADWEEP','PUDUCHERRY','TAMIL_NADU','TELANGANA','All_India']
+    state_list = state
     dataPanda = create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
-    for i in range(0,36):
-        dataPanda[i]['visible'] = False
+    #for i in range(0,36):
+        #dataPanda[i]['visible'] = False
     return dataPanda
      
 
@@ -214,14 +210,69 @@ DashServer.layout = html.Div([
 
   #chart
     html.Div(
-       [
-          dcc.Graph(id='example-graph',
+        [ 
+       html.Div(
+        [
+            dcc.Graph(id='example-graph',
                               #animate=True, 
-                            style={'margin-top': '20'},
-                             config={'displayModeBar': False}
-                   )
-        ], className='row'
-         ),
+                              style={'margin-top': '20'}
+                              , config = {'showLink': True} 
+                              #,config={'displayModeBar': False}
+                     )
+        ], className='eight columns',
+            ),
+       html.Div(
+        [
+            dcc.Checklist(
+                id='state',
+               options=[
+                     {'label': 'CHANDIGARH', 'value': 'CHANDIGARH'},
+                     {'label': 'HARYANA', 'value': 'HARYANA'},
+                     {'label': 'HIMACHAL PRADESH', 'value': 'HIMACHAL_PRADESH'},
+                     {'label': 'JAMMU & KASHMIR', 'value': 'JAMMU_KASHMIR'},
+                     {'label': 'NCT OF DELHI', 'value': 'NCT_OF_DELHI'},
+                     {'label': 'PUNJAB', 'value': 'PUNJAB'},
+                     {'label': 'RAJASTHAN', 'value': 'RAJASTHAN'},
+                     {'label': 'ARUNACHAL PRADESH', 'value': 'ARUNACHAL_PRADESH'},
+                     {'label': 'ASSAM', 'value': 'ASSAM'},
+                     {'label': 'MANIPUR', 'value': 'MANIPUR'},
+                     {'label': 'MEGHALAYA', 'value': 'MEGHALAYA'},
+                     {'label': 'MIZORAM', 'value': 'MIZORAM'},
+                     {'label': 'NAGALAND', 'value': 'NAGALAND'},
+                     {'label': 'TRIPURA', 'value': 'TRIPURA'},
+                     {'label': 'ANDAMAN & NICOBAR ISLANDS', 'value': 'ANDAMAN_NICOBAR_ISLANDS'},
+                     {'label': 'BIHAR', 'value': 'BIHAR'},
+                     {'label': 'JHARKHAND', 'value': 'JHARKHAND'},
+                     {'label': 'ODISHA', 'value': 'ODISHA'},
+                     {'label': 'SIKKIM', 'value': 'SIKKIM'},
+                     {'label': 'WEST BENGAL', 'value': 'WEST_BENGAL'},
+                     {'label': 'CHHATTISGARH', 'value': 'CHHATTISGARH'},
+                     {'label': 'MADHYA PRADESH', 'value': 'MADHYA_PRADESH'},
+                     {'label': 'UTTARAKHAND', 'value': 'UTTARAKHAND'},
+                     {'label': 'UTTAR PRADESH', 'value': 'UTTAR_PRADESH'},
+                     {'label': 'DADRANAGAR HAVELI', 'value': 'DADRANAGAR_HAVELI'},
+                     {'label': 'DAMAN DIU', 'value': 'DAMAN_DIU'},
+                     {'label': 'GOA', 'value': 'GOA'},
+                     {'label': 'GUJARAT', 'value': 'GUJARAT'},
+                     {'label': 'MAHARASHTRA', 'value': 'MAHARASHTRA'},
+                     {'label': 'ANDHRA PRADESH', 'value': 'ANDHRA_PRADESH'},
+                     {'label': 'KARNATAKA', 'value': 'KARNATAKA'},
+                     {'label': 'KERALA', 'value': 'KERALA'},
+                     {'label': 'LAKSHADWEEP', 'value': 'LAKSHADWEEP'},
+                     {'label': 'PUDUCHERRY', 'value': 'PUDUCHERRY'},
+                     {'label': 'TAMIL NADU', 'value': 'TAMIL_NADU'},
+                     {'label': 'TELANGANA', 'value': 'TELANGANA'},
+                     {'label': 'All India', 'value': 'All_India'}
+                       ],
+                  values=['All_India']#,
+                  #labelStyle={'width':'100px', 'display': 'inline-block', 'padding-right':'20px'} 
+                         )
+        ], className='four columns',
+             style={'margin-top': '20'} 
+            )
+         ], className='row'   
+            ),
+
 
     dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)')
 ], className='ten columns offset-by-one')    
@@ -265,9 +316,10 @@ def update_output(chart_type, pathname):
     dash.dependencies.Output('example-graph', 'figure'),
     [dash.dependencies.Input('chart_type', 'value'),
      #dash.dependencies.Input('datatable', 'rows'),
-     dash.dependencies.Input('url', 'pathname')
+     dash.dependencies.Input('url', 'pathname'),
+     dash.dependencies.Input ('state', 'values')
     ])
-def update_output(chart_type, pathname):
+def update_output(chart_type, pathname, state):
     des = str(pathname)
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]
@@ -281,7 +333,7 @@ def update_output(chart_type, pathname):
     #file = pd.DataFrame(rows)
     x_axis = 'Date'
     y_axis = filter
-    dataPanda = select_chart(x_axis,y_axis,chart_type,file)
+    dataPanda = select_chart(x_axis,y_axis,chart_type,file,state)
     layout = create_layout(x_axis,y_axis)
     figure = {'data': dataPanda,
               'layout': layout}

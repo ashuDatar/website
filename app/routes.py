@@ -97,7 +97,7 @@ def display_page(pathname, filter):
     else:
         return '404'	
 
-@DashServer.AppServer.route('/app/assets/1_style.css')
+@DashServer.server.route('/app/assets/1_style.css')
 def static_file(path):
     return send_from_directory('/app/assets/', '1_style.css')			
 	   	

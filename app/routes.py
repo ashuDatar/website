@@ -67,6 +67,9 @@ def visualization(description):
 
 DashServer.layout = html.Div([	dcc.Location(id='url', refresh=False),			      
                                 html.Div(id='signal', style={'display': 'none'}),
+			         html.Div([  html.Link( rel='stylesheet',
+                                             href='/app/assets/1_style.css'),
+                                 html.Div('Assets loading locally')]),
 			              html.Div(id='page-content')])
 
 
@@ -93,6 +96,10 @@ def display_page(pathname, filter):
          #return dashapp0.layout
     else:
         return '404'	
+
+@DashServer.AppServer.route('/app/assets/1_style.css')
+def static_file(path):
+    return send_from_directory('/app/assets/', '1_style.css')			
 	   	
         
    

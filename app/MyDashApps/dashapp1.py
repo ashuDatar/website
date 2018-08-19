@@ -185,7 +185,7 @@ DashServer.layout = html.Div([
     
      #dcc.Location(id='url', refresh=False),
     
-
+    
     # selectors
 
      html.Div(
@@ -221,7 +221,14 @@ DashServer.layout = html.Div([
                      )
         ], className='eight columns',
             ),
-       html.Div(
+       
+       dcc.RadioItems(
+        id='toggle',
+        options=[{'label': i, 'value': i} for i in ['Show', 'Hide']],
+        value='Show'
+    ),
+     
+       html.Div(id='controls-container', children=
         [
             dcc.Checklist(
                 id='state',
@@ -338,6 +345,13 @@ def update_output(chart_type, pathname, state):
     figure = {'data': dataPanda,
               'layout': layout}
     return figure
+
+@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value')])
+def toggle_container(toggle_value):
+    if toggle_value == 'Show':
+        return {'display': 'none'}
+    else:
+        return {'display': 'block'}
 
 layout = DashServer.layout
 

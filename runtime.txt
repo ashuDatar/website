@@ -1,2 +1,2 @@
-python-3.6.1
+python-3.6.6
 dash-0.24.1

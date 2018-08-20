@@ -238,9 +238,10 @@ DashServer.layout = html.Div([
         [      
        html.Button('Compare with States', id='button'),
         ], className='two   columns', 
+                
        ),
-            
-       html.Div(id='controls-container', children=
+       
+         html.Div(id='controls-container', children=
         [
             dcc.Checklist(
                 id='state',
@@ -369,8 +370,9 @@ def update_output(chart_type, pathname, state):
 
 @DashServer.callback(Output('controls-container', 'style'), [Input('button', 'n_clicks')])
 def toggle_container(n_clicks):
+    return 'The button has been clicked {} times'.format(n_clicks)
     #if n_clicks == 0:
-        return {'display': 'none'}
+        #return {'display': 'none'}
     #else:
         #return {'display': 'block'}
 

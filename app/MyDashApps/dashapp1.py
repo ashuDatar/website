@@ -241,6 +241,10 @@ DashServer.layout = html.Div([
                 
        ),
        
+           html.Div(id='output-container-button1',
+             children='Enter a value and press submit'),
+            
+            
          html.Div(id='controls-container', children=
         [
             dcc.Checklist(
@@ -368,7 +372,7 @@ def update_output(chart_type, pathname, state):
  #       return {'display': 'block'}
 
 
-@DashServer.callback(Output('controls-container', 'style'), [Input('button', 'n_clicks')])
+@DashServer.callback(Output('output-container-button1', 'style'), [Input('button', 'n_clicks')])
 def toggle_container(n_clicks):
     return 'The button has been clicked {} times'.format(n_clicks)
     #if n_clicks == 0:

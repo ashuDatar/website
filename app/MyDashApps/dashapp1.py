@@ -241,9 +241,7 @@ DashServer.layout = html.Div([
                 
        ),
        
-           html.Div(id='output-container-button1',
-             children='Enter a value and press submit'),
-            
+                   
             
          html.Div(id='controls-container', children=
         [
@@ -373,7 +371,7 @@ def update_output(chart_type, pathname, state):
 
 
 @DashServer.callback(Output('controls-container', 'children'), [Input('button', 'n_clicks')])
-def toggle_container(n_clicks):
+def button_container(n_clicks):
     if n_clicks > 0:
        return {'display': 'block'}
     else:

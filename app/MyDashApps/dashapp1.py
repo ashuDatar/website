@@ -209,8 +209,8 @@ DashServer.layout = html.Div([
         [ 
        dcc.RadioItems(
         id='toggle',
-        options=[{'label': i, 'value': i} for i in ['Show', 'Hide']],
-        value='Show'
+        options=[{'label': i, 'value': i} for i in ['Show Edit Options', 'Hide Edit Options']],
+        value='Hide Edit Options'
     )
         ],
            className='two columns',
@@ -354,7 +354,7 @@ def update_output(chart_type, pathname, state):
 
 @DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
-    if toggle_value == 'Show':
+    if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
     else:
         return {'display': 'block'}

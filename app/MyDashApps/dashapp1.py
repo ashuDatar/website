@@ -234,6 +234,12 @@ DashServer.layout = html.Div([
         ], className='ten    columns',
             ),
             
+       html.Div(id='output-container-button', children=
+        [      
+       html.Button('Compare with States', id='button'),
+        ], className='two   columns', 
+       ),
+            
        html.Div(id='controls-container', children=
         [
             dcc.Checklist(
@@ -352,7 +358,23 @@ def update_output(chart_type, pathname, state):
               'layout': layout}
     return figure
 
-@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value')])
+
+#@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value')])
+#def toggle_container(toggle_value):
+ #   if toggle_value == 'Hide Edit Options':
+ #       return {'display': 'none'}
+ #   else:
+ #       return {'display': 'block'}
+
+
+@DashServer.callback(Output('controls-container', 'style'), [Input('button', 'n_clicks')])
+def toggle_container(n_clicks):
+    if n_clicks == 0:
+        return {'display': 'none'}
+    else:
+        return {'display': 'block'}
+
+@DashServer.callback(Output('output-container-button', 'children'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}

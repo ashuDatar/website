@@ -214,7 +214,7 @@ DashServer.layout = html.Div([
     )
         ],
            className='two columns',
-           style={'margin-top': '10'}
+           style={'margin-top': '15'}
       )    
 
         ], className='row'

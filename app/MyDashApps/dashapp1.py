@@ -374,7 +374,7 @@ def toggle_container(n_clicks):
     else:
         return {'display': 'block'}
 
-@DashServer.callback(Output('output-container-button', 'children'), [Input('toggle', 'value')])
+@DashServer.callback(Output('output-container-button', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}

@@ -374,6 +374,7 @@ def update_output(chart_type, pathname, state):
 
 @DashServer.callback(Output('output-container-button1', 'children'), [Input('button', 'n_clicks')])
 def toggle_container(n_clicks):
+    if n_clicks > 0:
     return 'The button has been clicked {} times'.format(n_clicks)
     #if n_clicks == 0:
         #return {'display': 'none'}

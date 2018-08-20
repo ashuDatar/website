@@ -201,9 +201,21 @@ DashServer.layout = html.Div([
                     value='bar'
                         )
             ],
-           className='four columns',
+           className='ten columns',
            style={'margin-top': '10'}
-     )
+     ),
+            
+      html.Div(
+        [ 
+       dcc.RadioItems(
+        id='toggle',
+        options=[{'label': i, 'value': i} for i in ['Show', 'Hide']],
+        value='Show'
+    )
+        ],
+           className='two columns',
+           style={'margin-top': '10'}
+      )    
 
         ], className='row'
    ),
@@ -219,15 +231,9 @@ DashServer.layout = html.Div([
                               , config = {'showLink': True} 
                               #,config={'displayModeBar': False}
                      )
-        ], className='eight columns',
+        ], className='ten    columns',
             ),
-       
-       dcc.RadioItems(
-        id='toggle',
-        options=[{'label': i, 'value': i} for i in ['Show', 'Hide']],
-        value='Show'
-    ),
-     
+            
        html.Div(id='controls-container', children=
         [
             dcc.Checklist(
@@ -274,7 +280,7 @@ DashServer.layout = html.Div([
                   values=['All_India']#,
                   #labelStyle={'width':'100px', 'display': 'inline-block', 'padding-right':'20px'} 
                          )
-        ], className='four columns',
+        ], className='two columns',
              style={'margin-top': '20'} 
             )
          ], className='row'   

@@ -236,7 +236,7 @@ DashServer.layout = html.Div([
             
        html.Div(id='output-container-button', children=
         [      
-       html.Button('Compare with States', id='button',n_clicks=0,n_clicks_previous=0),
+       html.Button('Compare with States', id='button',n_clicks=0),
         ], className='two   columns', 
                 
        ),

@@ -236,7 +236,7 @@ DashServer.layout = html.Div([
             
        html.Div(id='output-container-button', children=
         [      
-       html.Button('Compare with States', id='button'),
+       html.Button('Compare with States', id='button',n_clicks=0),
         ], className='two   columns', 
                 
        ),
@@ -370,7 +370,7 @@ def update_output(chart_type, pathname, state):
  #       return {'display': 'block'}
 
 
-@DashServer.callback(Output('controls-container', 'children'), [Input('button', 'n_clicks'),Input('toggle', 'value')])
+@DashServer.callback(Output('controls-container', 'style'), [Input('button', 'n_clicks'),Input('toggle', 'value')])
 def button_container(n_clicks,toggle_value):
     if toggle_value == 'Show Edit Options':
        if n_clicks > 0:

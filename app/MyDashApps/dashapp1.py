@@ -241,7 +241,7 @@ DashServer.layout = html.Div([
                 
        ),
        
-         html.Div(
+         html.Div(id='transform series', children=
         [
             html.P('Transform Series'), 
             dcc.Dropdown(
@@ -376,15 +376,18 @@ def update_output(chart_type, pathname, state):
     return figure
 
 
-#@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value')])
-#def toggle_container(toggle_value):
- #   if toggle_value == 'Hide Edit Options':
- #       return {'display': 'none'}
- #   else:
- #       return {'display': 'block'}
+@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value'), Input('button','n_click')])
+def toggle_container(toggle_value):
+    if toggle_value == 'Hide Edit Options':
+        if n_click > 0 :
+           return {'display': 'none'}
+        else:
+           return {'display': 'block'} 
+    else:
+        return {'display': 'block'}
 
 
-@DashServer.callback(Output('transform', 'style'), [Input('toggle', 'value')])
+@DashServer.callback(Output('transform series', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}

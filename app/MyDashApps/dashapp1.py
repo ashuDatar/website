@@ -374,7 +374,7 @@ def update_output(chart_type, pathname, state):
                     [State('button', 'n_clicks_previous')])
 def button_container(n_clicks,toggle_value,n_clicks_previous):
     if toggle_value == 'Show Edit Options':
-       if n_clicks > n_clicks_previous:
+       if n_clicks > 0:
           return {'display': 'block'}
        else:
           return {'display': 'none'} 

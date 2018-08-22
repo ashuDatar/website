@@ -26,7 +26,7 @@ import urllib
 
 
 
-def select_chart(x_axis,y_axis,chart_type,file,state) :
+def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     data_chart = file
     dataPanda = []
     state_list = state
@@ -243,13 +243,14 @@ DashServer.layout = html.Div([
        
          html.Div(id='transform series', children=
         [
-            html.P('Transform Series'), 
+            #html.P('Transform Series'), 
             dcc.Dropdown(
                     id='transform',
                     options=[{'label': 'Rebase to 100', 'value': 'rebase'},
                              {'label': 'Growth', 'value': 'growth'},
-                             {'label': 'Ratio', 'value': 'ratio'}],
-                    value='rebase'
+                             {'label': 'Ratio', 'value': 'ratio'},
+                             {'label': 'None', 'value': 'none'} ],
+                    value='none'
                         )
             ],
            className='two   columns', 
@@ -353,9 +354,10 @@ def update_output(chart_type, pathname):
     [dash.dependencies.Input('chart_type', 'value'),
      #dash.dependencies.Input('datatable', 'rows'),
      dash.dependencies.Input('url', 'pathname'),
-     dash.dependencies.Input ('state', 'values')
+     dash.dependencies.Input ('state', 'values'),
+     dash.dependencies.Input ('transform', 'value')
     ])
-def update_output(chart_type, pathname, state):
+def update_output(chart_type, pathname, state,transformation):
     des = str(pathname)
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]
@@ -369,7 +371,8 @@ def update_output(chart_type, pathname, state):
     #file = pd.DataFrame(rows)
     x_axis = 'Date'
     y_axis = filter
-    dataPanda = select_chart(x_axis,y_axis,chart_type,file,state)
+    transformation = transformation
+    dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)
     figure = {'data': dataPanda,
               'layout': layout}
@@ -378,11 +381,11 @@ def update_output(chart_type, pathname, state):
 
 @DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value'), Input('button','n_click')])
 def toggle_container(toggle_value):
-    if toggle_value == 'Hide Edit Options':
+    if toggle_value == 'Show Edit Options':
         if n_click > 0 :
-           return {'display': 'none'}
+           return {'display': 'block'}
         else:
-           return {'display': 'block'} 
+           return {'display': 'none'} 
     else:
         return {'display': 'block'}
 

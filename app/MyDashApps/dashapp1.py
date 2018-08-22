@@ -29,8 +29,7 @@ import urllib
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     #data_chart = file
     data_chart = file[file['Description'] == y_axis]
-    state_list = state
-    data_chart.loc[:,state_list] = data_chart.loc[:,state_list]/data_chart.loc[0,state_list]
+    data_chart.loc[:,state_list] = data_chart.loc[:,state_list]/data_chart.loc[data_chart.index.min(),state_list]
     dataPanda = []
     dataPanda = create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
     #for i in range(0,36):

@@ -28,8 +28,6 @@ import urllib
 
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     data_chart = file
-    for i in range(len(data_chart)):
-        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
     dataPanda = []
     state_list = state
     dataPanda = create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
@@ -50,6 +48,9 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):
 
 
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
+    data_chart = data_chart[data_chart['Description'] == y_axis]
+    for i in range(len(data_chart)):
+        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
     x=data_chart[data_chart['Description'] == y_axis]['Date']
     if (chart_type == 'scatter'): 
             for i in state_list:
@@ -90,6 +91,9 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
 
 
 def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
+    data_chart = data_chart[data_chart['Description'] == y_axis]
+    for i in range(len(data_chart)):
+        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(
@@ -238,7 +242,7 @@ DashServer.layout = html.Div([
             
        html.Div(id='output-container-button', children=
         [      
-       html.Button('Compare with States', id='button',n_clicks=0),
+           html.Button('Compare with States', id='button',n_clicks=0),
         ], className='two   columns', 
                 
        ),
@@ -381,8 +385,8 @@ def update_output(chart_type, pathname, state,transformation):
     return figure
 
 
-@DashServer.callback(Output('controls-container', 'style'), [Input('toggle', 'value'), Input('button','n_click')])
-def toggle_container(toggle_value, n_click):
+@DashServer.callback(Output('controls-container', 'style'), [Input('button','n_clicks'), Input('toggle', 'value')])
+def toggle_container(n_clicks, toggle_value):
     if toggle_value == 'Show Edit Options':
         if n_click > 0 :
            return {'display': 'block'}

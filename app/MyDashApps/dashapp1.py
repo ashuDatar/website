@@ -92,8 +92,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
 
 def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
     data_chart = data_chart[data_chart['Description'] == y_axis]
-    for i in range(len(data_chart)):
-        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
+    data_chart.loc[:,state_list] = data_chart.loc[:,state_list]/data_chart.loc[0,state_list]
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(

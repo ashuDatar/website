@@ -28,6 +28,8 @@ import urllib
 
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     data_chart = file
+    for i in range(len(data_chart)):
+        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
     dataPanda = []
     state_list = state
     dataPanda = create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
@@ -387,7 +389,7 @@ def toggle_container(toggle_value):
         else:
            return {'display': 'none'} 
     else:
-        return {'display': 'block'}
+        return {'display': 'none'}
 
 
 @DashServer.callback(Output('transform series', 'style'), [Input('toggle', 'value')])

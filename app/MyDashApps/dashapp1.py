@@ -241,7 +241,21 @@ DashServer.layout = html.Div([
                 
        ),
        
-                   
+         html.Div(
+        [
+            html.P('Transform Series'), 
+            dcc.Dropdown(
+                    id='transform',
+                    options=[{'label': 'Rebase to 100', 'value': 'rebase'},
+                             {'label': 'Growth', 'value': 'growth'},
+                             {'label': 'Ratio', 'value': 'ratio'}],
+                    value='rebase'
+                        )
+            ],
+           className='two   columns', 
+           #style={'margin-top': '10'}
+         ),
+                      
             
          html.Div(id='controls-container', children=
         [
@@ -370,18 +384,13 @@ def update_output(chart_type, pathname, state):
  #       return {'display': 'block'}
 
 
-@DashServer.callback(Output('controls-container', 'style'), [Input('button', 'n_clicks'),Input('toggle', 'value')],
-                    [State('button', 'n_clicks_previous')])
-def button_container(n_clicks,toggle_value,n_clicks_previous):
-    if toggle_value == 'Show Edit Options':
-       if n_clicks > 0:
-          return {'display': 'block'}
-       else:
-          return {'display': 'none'} 
-    else:
+@DashServer.callback(Output('transform', 'style'), [Input('toggle', 'value')])
+def toggle_container(toggle_value):
+    if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
-        
-     
+    else:
+        return {'display': 'block'}
+    
    
 
 @DashServer.callback(Output('output-container-button', 'style'), [Input('toggle', 'value')])

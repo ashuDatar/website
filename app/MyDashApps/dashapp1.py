@@ -388,7 +388,7 @@ def update_output(chart_type, pathname, state,transformation):
 @DashServer.callback(Output('controls-container', 'style'), [Input('button','n_clicks'), Input('toggle', 'value')])
 def toggle_container(n_clicks, toggle_value):
     if toggle_value == 'Show Edit Options':
-        if n_click > 0 :
+        if n_clicks > 0 :
            return {'display': 'block'}
         else:
            return {'display': 'none'} 

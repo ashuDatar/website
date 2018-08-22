@@ -50,7 +50,7 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
     data_chart = data_chart[data_chart['Description'] == y_axis]
     for i in range(len(data_chart)):
-        data_chart.iloc[i:,16:52] = data_chart.iloc[i:,16:52]/data_chart.iloc[0,16:52]
+        data_chart.iloc[i:,state_list] = data_chart.iloc[i:,state_list]/data_chart.iloc[0,state_list]
     x=data_chart[data_chart['Description'] == y_axis]['Date']
     if (chart_type == 'scatter'): 
             for i in state_list:

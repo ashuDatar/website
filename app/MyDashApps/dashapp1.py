@@ -27,7 +27,9 @@ import urllib
 
 
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
-    data_chart = file
+    #data_chart = file
+    data_chart = file[file['Description'] == y_axis]
+    data_chart.loc[:,state_list] = data_chart.loc[:,state_list]/data_chart.loc[0,state_list]
     dataPanda = []
     state_list = state
     dataPanda = create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
@@ -48,9 +50,6 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):
 
 
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
-    data_chart = data_chart[data_chart['Description'] == y_axis]
-    for i in range(len(data_chart)):
-        data_chart.iloc[i:,state_list] = data_chart.iloc[i:,state_list]/data_chart.iloc[0,state_list]
     x=data_chart[data_chart['Description'] == y_axis]['Date']
     if (chart_type == 'scatter'): 
             for i in state_list:
@@ -91,8 +90,6 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
 
 
 def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
-    data_chart = data_chart[data_chart['Description'] == y_axis]
-    data_chart.loc[:,state_list] = data_chart.loc[:,state_list]/data_chart.loc[0,state_list]
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(

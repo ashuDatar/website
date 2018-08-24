@@ -268,7 +268,10 @@ DashServer.layout = html.Div([
             dcc.Checklist(
                 id='state',
                options=[
-                     {'label': 'CHANDIGARH', 'value': 'CHANDIGARH'}, {'label': 'HARYANA', 'value': 'HARYANA'}, {'label': 'HIMACHAL PRADESH', 'value': 'HIMACHAL_PRADESH'}, {'label': 'JAMMU & KASHMIR', 'value': 'JAMMU_KASHMIR'},
+                     {'label': 'CHANDIGARH', 'value': 'CHANDIGARH'}, 
+                     {'label': 'HARYANA', 'value': 'HARYANA'}, 
+                     {'label': 'HIMACHAL PRADESH', 'value': 'HIMACHAL_PRADESH'}, 
+                     {'label': 'JAMMU & KASHMIR', 'value': 'JAMMU_KASHMIR'},
                      {'label': 'NCT OF DELHI', 'value': 'NCT_OF_DELHI'},
                      {'label': 'PUNJAB', 'value': 'PUNJAB'},
                      {'label': 'RAJASTHAN', 'value': 'RAJASTHAN'},
@@ -303,7 +306,8 @@ DashServer.layout = html.Div([
                      {'label': 'TELANGANA', 'value': 'TELANGANA'},
                      {'label': 'All India', 'value': 'All_India'}
                        ],
-                  values=['All_India']#,
+                  values=['All_India'],
+                  labelStyle={'display': 'inline-block'}
                   #labelStyle={'width':'100px', 'display': 'inline-block', 'padding-right':'20px'} 
                          )
         ], className='row' #,

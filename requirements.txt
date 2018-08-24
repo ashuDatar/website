@@ -54,3 +54,4 @@ whitenoise==3.3.1
 Whoosh==2.7.0
 WTForms==2.2.1
 zope.interface==4.5.0
+sd-material-ui==2.15.0

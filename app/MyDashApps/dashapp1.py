@@ -236,15 +236,7 @@ DashServer.layout = html.Div([
         ], className='ten    columns',
             ),
             
-       html.Div(id='output-container-button', children=
-        [      
-           html.Button('Compare with States', id='button',n_clicks=0),
-        ], className='two   columns', 
-           style={'margin-top': '25'}     
-                
-       ),
-       
-         html.Div(id='transform series', children=
+           html.Div(id='transform series', children=
         [
             #html.P('Transform Series'), 
             dcc.Dropdown(
@@ -258,8 +250,16 @@ DashServer.layout = html.Div([
             ],
            className='two   columns', 
            style={'margin-top': '20'}
-         ),
-                      
+         ),     
+            
+       html.Div(id='output-container-button', children=
+        [      
+           html.Button('Compare with States', id='button',n_clicks=0),
+        ], className='two   columns', 
+           style={'margin-top': '25'}     
+                
+       ),
+       
             
          html.Div(id='controls-container', children=
         [
@@ -307,8 +307,8 @@ DashServer.layout = html.Div([
                   values=['All_India']#,
                   #labelStyle={'width':'100px', 'display': 'inline-block', 'padding-right':'20px'} 
                          )
-        ], className='two columns',
-             style={'margin-top': '20'} 
+        ], className='row',
+            # style={'margin-top': '20'} 
             )
          ], className='row'   
             ),

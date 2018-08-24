@@ -1,4 +1,4 @@
-from werkzeug.wsgi import DispatcherMiddleware
+#from werkzeug.wsgi import DispatcherMiddleware
 #from werkzeug.serving import run_simple
 from app.server import AppServer
 #from app.webroutes import webServer
@@ -14,11 +14,11 @@ from app.Dashserver import DashServer
 
 #sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-myApp = DispatcherMiddleware(AppServer,{'/app': DashServer})
+#myApp = DispatcherMiddleware(AppServer,{'/app': DashServer})
 
 if __name__ == '__main__':
    #AppServer.run(debug=True, use_reloader=True)
    port = int(os.environ.get('PORT', 5000))
-   #AppServer.run(host='0.0.0.0', port=port, debug=True)
-   myApp.run(host='0.0.0.0', port=port, debug=True)
+   AppServer.run(host='0.0.0.0', port=port, debug=True)
+   #myApp.run(host='0.0.0.0', port=port, debug=True)
 

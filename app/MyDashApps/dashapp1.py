@@ -309,11 +309,11 @@ DashServer.layout = html.Div([
                   values=['All_India']#,
                   #labelStyle={'width':'100px', 'display': 'inline-block', 'padding-right':'20px'} 
                          )
-        ], className='row',
+        ], className='row' #,
             # style={'margin-top': '20'} 
             ),
 
-    dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)'))
+   # dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)'))
 ], className='ten columns offset-by-one')    
 
 

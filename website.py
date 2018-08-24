@@ -14,7 +14,7 @@ from app.Dashserver import DashServer
 
 #sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-myApp = DispatcherMiddleware(AppServer,{'/app': Dashserver})
+myApp = DispatcherMiddleware(AppServer,{'/app': DashServer})
 
 if __name__ == '__main__':
    #AppServer.run(debug=True, use_reloader=True)

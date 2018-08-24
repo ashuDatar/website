@@ -12,7 +12,7 @@ from flask import Flask, render_template
 from app.server import db
 from app.models import test_data_dummy_data
 import urllib
-#import sd_material_ui
+import sd_material_ui
 #import dash_table_experiments as dt
 
 # In[2]:
@@ -164,7 +164,7 @@ def create_layout(x_axis,y_axis) :
     return layout
 
 
-DashServer.layout = html.Div([
+DashServer.layout = sd_material_ui.Paper([ html.Div([
     # title row
     html.Div(
         [
@@ -188,7 +188,7 @@ DashServer.layout = html.Div([
     
      #dcc.Location(id='url', refresh=False),
     
-    #sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
+    sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
     # selectors
 
      html.Div(
@@ -317,7 +317,7 @@ DashServer.layout = html.Div([
 
    # dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)'))
 ], className='ten columns offset-by-one')    
-
+])
 
 
 

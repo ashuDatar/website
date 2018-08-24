@@ -188,7 +188,7 @@ DashServer.layout =  html.Div([
     
      #dcc.Location(id='url', refresh=False),
     
-    sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
+    #sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
     # selectors
 
      html.Div(

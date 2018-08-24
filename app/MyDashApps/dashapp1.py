@@ -260,8 +260,10 @@ DashServer.layout = html.Div([
                 
        ),
        
-            
-         html.Div(id='controls-container', children=
+         ], className='row'   
+            ),
+    
+        html.Div(id='controls-container', children=
         [
             dcc.Checklist(
                 id='state',
@@ -310,9 +312,6 @@ DashServer.layout = html.Div([
         ], className='row',
             # style={'margin-top': '20'} 
             )
-         ], className='row'   
-            ),
-
 
     dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)')
 ], className='ten columns offset-by-one')    

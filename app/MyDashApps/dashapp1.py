@@ -18,8 +18,8 @@ import urllib
 # In[2]:
 
 
- data = db.session.query(test_data_dummy_data)
- file = pd.read_sql(data.statement, data.session.bind)
+data = db.session.query(test_data_dummy_data)
+file = pd.read_sql(data.statement, data.session.bind)
 
 
 

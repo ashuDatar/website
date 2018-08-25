@@ -21,6 +21,10 @@ import urllib
 data = db.session.query(test_data_dummy_data)
 file = pd.read_sql(data.statement, data.session.bind)
 
+x_axis_list = file['Metric'].unique().tolist()
+y_axis_list = file['Metric'].unique().tolist()
+y_axis_list.append('None')
+x_axis_list.append('Date')
 
 
 # In[ ]:
@@ -256,13 +260,40 @@ DashServer.layout =  html.Div([
             ],
            className='two   columns', 
            style={'margin-top': '30'}
-         ),     
+         ),  
+            
+       html.Div(id='select_x_axis', children=
+        [
+            html.P('Choose x-axis:'), 
+            dcc.Dropdown(
+                    id='x_axis',
+                    options=[{'label': k, 'value': k} for k in x_axis_list],               
+                    value='Date'
+                        )
+            ],
+           className='two columns',
+           #style={'margin-top': '10'}
+       ),    
+            
+       html.Div(id='select_y_axis', children=
+        [
+            html.P('Choose y-axis:'), 
+            dcc.Dropdown(
+                    id='y_axis',
+                    options=[{'label': k, 'value': k} for k in y_axis_list],               
+                    value='None'
+                        )
+            ],
+           className='two columns',
+           #style={'margin-top': '10'}
+        ),
+            
             
        html.Div(id='output-container-button', children=
         [      
            html.Button('Compare with States', id='button',n_clicks=0),
         ], className='two   columns', 
-           style={'margin-top': '40'}     
+           #style={'margin-top': '40'}     
                 
        ),
        
@@ -364,9 +395,11 @@ def update_output(chart_type, pathname):
      #dash.dependencies.Input('datatable', 'rows'),
      dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input ('state', 'values'),
-     dash.dependencies.Input ('transform', 'value')
+     dash.dependencies.Input ('transform', 'value'),
+     dash.dependencies.Input('select_x_axis', 'value'),
+     dash.dependencies.Input('select_y_axis', 'value')
     ])
-def update_output(chart_type, pathname, state,transformation):
+def update_output(chart_type, pathname, state,transformation,select_x_axis,select_y_axis):
     des = str(pathname)
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]
@@ -378,8 +411,14 @@ def update_output(chart_type, pathname, state,transformation):
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
-    x_axis = 'Date'
-    y_axis = filter
+    if select_x_axis == 'Date':
+       x_axis = 'Date'
+    else:
+       x_axis =  select_x_axis 
+    if select_y_axis == 'None':
+       y_axis = filter
+    else:
+       y_axis = select_y_axis  
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)
@@ -414,6 +453,21 @@ def toggle_container(toggle_value):
         return {'display': 'none'}
     else:
         return {'display': 'block'}
+    
+@DashServer.callback(Output('select_x_axis', 'style'), [Input('toggle', 'value')])
+def toggle_container(toggle_value):
+    if toggle_value == 'Hide Edit Options':
+        return {'display': 'none'}
+    else:
+        return {'display': 'block'}    
+    
+    
+@DashServer.callback(Output('select_y_axis', 'style'), [Input('toggle', 'value')])
+def toggle_container(toggle_value):
+    if toggle_value == 'Hide Edit Options':
+        return {'display': 'none'}
+    else:
+        return {'display': 'block'}        
 
 layout = DashServer.layout
 

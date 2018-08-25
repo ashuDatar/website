@@ -32,9 +32,11 @@ def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     data_chart = file[file['Description'] == y_axis]
     state_list = state
     if (transformation == 'rebase'):
-        data_chart.loc[:,state] = data_chart.loc[:,state]/data_chart.loc[data_chart.index.min(),state]
+        data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
     elif (transformation == 'growth'):
-         data_chart = data_chart
+        for i in data_chart.index
+            index = i+1           
+            data_chart.loc[index,state] = data_chart.loc[index,state]/data_chart.loc[i,state] - 1
     elif (transformation == 'ratio'):
          data_chart = data_chart
     else:
@@ -168,7 +170,7 @@ DashServer.layout =  html.Div([
     # title row
     html.Div(
         [
-            html.H1(
+            html.H3(
                 'States of India-Explore states of India',
                 style={'font-family': 'Helvetica',
                        "margin-top": "25",
@@ -217,7 +219,7 @@ DashServer.layout =  html.Div([
     )
         ],
            className='two columns',
-           style={'margin-top': '15'}
+           style={'margin-top': '25'}
       )    
 
         ], className='row'
@@ -250,14 +252,14 @@ DashServer.layout =  html.Div([
                         )
             ],
            className='two   columns', 
-           style={'margin-top': '20'}
+           style={'margin-top': '30'}
          ),     
             
        html.Div(id='output-container-button', children=
         [      
            html.Button('Compare with States', id='button',n_clicks=0),
         ], className='two   columns', 
-           style={'margin-top': '25'}     
+           style={'margin-top': '40'}     
                 
        ),
        

@@ -34,7 +34,7 @@ def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     if (transformation == 'rebase'):
         data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
     elif (transformation == 'growth'):
-        for i in data_chart.index
+        for i in data_chart.index:
             index = i+1           
             data_chart.loc[index,state] = data_chart.loc[index,state]/data_chart.loc[i,state] - 1
     elif (transformation == 'ratio'):

@@ -25,7 +25,7 @@ x_axis_list = file['Metric'].unique().tolist()
 y_axis_list = file['Metric'].unique().tolist()
 y_axis_list.append('None')
 x_axis_list.append('Date')
-select_y_axis = 'None'
+#select_y_axis = 'None'
 
 
 # In[ ]:
@@ -386,7 +386,7 @@ def update_output(chart_type, pathname,select_x_axis,select_y_axis):
     category = file[file['Description'] == filter].Category.unique()
     source = file[file['Description'] == filter].Source.unique()
     if select_y_axis == 'None':
-       select_y_axis = 'abcd'
+       select_y_axis = filter
     else:
        select_y_axis = select_y_axis  
     return html.Div([

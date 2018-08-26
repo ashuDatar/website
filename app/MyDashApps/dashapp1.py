@@ -86,7 +86,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                         'size': 15,
                         'line': {'width': 0.5, 'color': 'white'}
                     },
-                    name=i  ) 
+                    name=i+'-'+j  ) 
                 dataPanda.append(trace)
     else:            
         if (chart_type == 'line'): 
@@ -98,7 +98,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                             text= i,
                             mode = 'lines',
                             opacity=0.7,
-                            name=i  ) 
+                            name=i+'-'+j  ) 
                     dataPanda.append(trace)
         else:            
             if (chart_type == 'bar'): 
@@ -109,7 +109,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                             y=data_chart[data_chart['Metric'] == j][i],
                             text= i,
                             opacity=0.7,
-                            name=i  ) 
+                            name=i+'-'+j  ) 
                          dataPanda.append(trace)            
     return dataPanda
 

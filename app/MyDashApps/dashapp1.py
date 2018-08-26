@@ -68,12 +68,14 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):
 
 
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
-    x=data_chart[data_chart['Description'] == y_axis]['Date']
+    #x=data_chart[data_chart['Description'] == y_axis]['Date']
+    x=data_chart['Date'] 
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(
                     x=x,
-                    y=data_chart[data_chart['Description'] == y_axis][i],
+                    #y=data_chart[data_chart['Description'] == y_axis][i],
+                    y=data_chart[i],
                     text= i,
                     mode='markers',
                     opacity=0.7,
@@ -88,7 +90,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
             for i in state_list:
                     trace = go.Scatter(
                             x=x,
-                            y=data_chart[data_chart['Description'] == y_axis][i],
+                            y=data_chart[i],
                             text= i,
                             mode = 'lines',
                             opacity=0.7,
@@ -99,7 +101,7 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                 for i in state_list:
                         trace = go.Bar(
                             x=x,
-                            y=data_chart[data_chart['Description'] == y_axis][i],
+                            y=data_chart[i],
                             text= i,
                             opacity=0.7,
                             name=i  ) 
@@ -111,8 +113,8 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(
-                    x=data_chart[data_chart['Metric'] == x_axis][i],
-                    y=data_chart[data_chart['Metric'] == y_axis][i],
+                    x=data_chart[i],
+                    y=data_chart[i],
                     text= i,
                     mode='markers',
                     opacity=0.7,
@@ -126,8 +128,8 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
         if (chart_type == 'line'): 
             for i in state_list:
                     trace = go.Scatter(
-                                x=data_chart[data_chart['Metric'] == x_axis][i],
-                                y=data_chart[data_chart['Metric'] == y_axis][i],
+                                x=data_chart[i],
+                                y=data_chart[i],
                                 text= i,
                                 mode = 'lines',
                                 opacity=0.7,
@@ -137,8 +139,8 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
             if (chart_type == 'bar'): 
                     for i in state_list:
                             trace = go.Bar(
-                                    x=data_chart[data_chart['Metric'] == x_axis][i],
-                                    y=data_chart[data_chart['Metric'] == y_axis][i],
+                                    x=data_chart[i],
+                                    y=data_chart[i],
                                     text= i,
                                     opacity=0.7,
                                     name=i  ) 
@@ -416,12 +418,30 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame(rows)
     if x_axis_1 == 'Date':
        x_axis = 'Date'
+       if y_axis_1 == 'None':
+          y_axis = filter
+          file = file[file['Description'] == y_axis]
+       else:
+          y_axis = y_axis_1
+          file = file[file['Metric'] == y_axis]
+    else:
+       x_axis =  x_axis_1
+       if y_axis_1 == 'None':
+          y_axis = filter
+          file[(file['Description'] == y_axis) | (file['Metric'] == x_axis) ] 
+       else:
+          y_axis = y_axis_1
+          file[(file['Metric'] == y_axis) | (file['Metric'] == x_axis) ]
+
+       
     else:
        x_axis =  x_axis_1 
     if y_axis_1 == 'None':
        y_axis = filter
+       file = file[file['Description'] == y_axis]
     else:
-       y_axis = y_axis_1 
+       y_axis = y_axis_1
+       file = file[file['Metric'] == y_axis]
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

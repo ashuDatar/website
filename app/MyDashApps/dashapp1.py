@@ -411,14 +411,14 @@ def update_output(chart_type, pathname, state,transformation,select_x_axis,selec
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
-    if select_x_axis == 'Date':
-       x_axis = 'Date'
-    else:
-       x_axis =  select_x_axis 
-    if select_y_axis == 'None':
-       y_axis = filter
-    else:
-       y_axis = select_y_axis  
+    #if select_x_axis == 'Date':
+    x_axis = 'Date'
+    #else:
+    #   x_axis =  select_x_axis 
+    #if select_y_axis == 'None':
+    y_axis = filter
+    #else:
+    #   y_axis = select_y_axis  
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

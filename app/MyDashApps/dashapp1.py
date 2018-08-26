@@ -432,16 +432,6 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
        else:
           y_axis = y_axis_1
           file[(file['Metric'] == y_axis) | (file['Metric'] == x_axis) ]
-
-       
-    else:
-       x_axis =  x_axis_1 
-    if y_axis_1 == 'None':
-       y_axis = filter
-       file = file[file['Description'] == y_axis]
-    else:
-       y_axis = y_axis_1
-       file = file[file['Metric'] == y_axis]
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

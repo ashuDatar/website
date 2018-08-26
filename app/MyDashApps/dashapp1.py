@@ -388,9 +388,9 @@ def update_output(chart_type, pathname,select_x_axis,select_y_axis):
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source),
-        html.H6('x-axis:{}'.format(select_x_axis),
-        html.H6('y-axis:{}'.format(select_y_axis) )
+        html.H6('Source:{}'.format(source)),
+        html.H6('x-axis:{}'.format(select_x_axis)),
+        html.H6('y-axis:{}'.format(select_y_axis))
          ])
 
 

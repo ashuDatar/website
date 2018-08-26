@@ -381,7 +381,7 @@ DashServer.title = 'States of India'
     [dash.dependencies.Input('chart_type', 'value'),
      dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input('x_axis_1', 'value'),
-     dash.dependencies.Input('y_axis_1', 'value')
+     dash.dependencies.Input('y_axis_2', 'value')
     ])
 def update_output(chart_type, pathname,x_axis_1,y_axis_1):
     des = str(pathname)
@@ -481,7 +481,7 @@ def toggle_container(toggle_value):
         return {'display': 'block'}  
     
 @DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'value'),
+    dash.dependencies.Output('y_axis_2', 'value'),
     [dash.dependencies.Input('url', 'pathname')])
 def set_y_value(pathame):
     des = str(pathname)

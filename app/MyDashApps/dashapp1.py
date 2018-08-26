@@ -287,7 +287,7 @@ DashServer.layout =  html.Div([
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    values=['None'],
+                    value=['None'],
                     multi=True 
                         )
             ],

@@ -381,7 +381,7 @@ DashServer.title = 'States of India'
     [dash.dependencies.Input('chart_type', 'value'),
      dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input('x_axis_1', 'value'),
-     dash.dependencies.Input('y_axis_2', 'value')
+     dash.dependencies.Input('y_axis_1', 'value')
     ])
 def update_output(chart_type, pathname,x_axis_1,y_axis_2):
     des = str(pathname)
@@ -397,7 +397,7 @@ def update_output(chart_type, pathname,x_axis_1,y_axis_2):
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
         html.H6('Source:{}'.format(source)),
-        html.H6('Source:{}'.format(y_axis_2)) 
+        html.H6('Source:{}'.format(y_axis_1[0])) 
          ])
 
 
@@ -480,22 +480,6 @@ def toggle_container(toggle_value):
     else:
         return {'display': 'block'}  
     
-@DashServer.callback(
-    dash.dependencies.Output('y_axis_2', 'value'),
-    [dash.dependencies.Input('url', 'pathname')])
-def set_y_value(pathame):
-    des = str(pathname)
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
-    metric = file[file['Description'] == filter].Metric.unique().tolist()
-    return metric    
-
-@DashServer.callback(
-    dash.dependencies.Output('y_axis_2', 'options'),
-    [dash.dependencies.Input('url', 'pathname')])
-def set_y_value(pathame):
-    return [{'label': i, 'value': i} for i in y_axis_list]
-
 layout = DashServer.layout
 
     

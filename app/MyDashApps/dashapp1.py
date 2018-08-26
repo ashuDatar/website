@@ -164,7 +164,7 @@ def create_layout(x_axis,y_axis) :
 
                 height=700,
 
-                xaxis = dict(title= 'Date'),
+                xaxis = dict(title= x_axis),
 
                 yaxis=dict(title=y_axis),
 

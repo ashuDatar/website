@@ -287,10 +287,10 @@ DashServer.layout =  html.Div([
         [
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
-                    id='y_axis_1',
-                    options=[{'label': k, 'value': k} for k in y_axis_list],               
+                    id='y_axis_1'#,
+                    #options=[{'label': k, 'value': k} for k in y_axis_list],               
                     #value=['None'],
-                    multi=True 
+                    #multi=True 
                         )
             ],
            className='two columns',
@@ -487,7 +487,13 @@ def set_y_value(pathame):
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
     metric = file[file['Description'] == filter].Metric.unique()
-    return metric    
+    return metric[0]    
+
+@DashServer.callback(
+    dash.dependencies.Output('y_axis_1', 'options'),
+    [dash.dependencies.Input('url', 'pathname')])
+def set_y_value(pathame):
+    return metric [{'label': i, 'value': i} for i in y_axis_list]
 
 layout = DashServer.layout
 

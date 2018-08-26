@@ -385,16 +385,10 @@ def update_output(chart_type, pathname,x_axis_1,y_axis_1):
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     category = file[file['Description'] == filter].Category.unique()
     source = file[file['Description'] == filter].Source.unique()
-    if y_axis_1 == 'None':
-       y_axis = filter
-    else:
-       y_axis = y_axis_1 
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source)),
-        html.H6('x-axis:{}'.format(x_axis_1)),
-        html.H6('y-axis:{}'.format(y_axis_1))
+        html.H6('Source:{}'.format(source))
          ])
 
 
@@ -420,14 +414,14 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
-    #if select_x_axis == 'Date':
-    x_axis = 'Date'
-    #else:
-    #   x_axis =  select_x_axis 
-    #if select_y_axis == 'None':
-    y_axis = filter
-    #else:
-    #   y_axis = select_y_axis  
+    if x_axis_1 == 'Date':
+       x_axis = 'Date'
+    else:
+       x_axis =  x_axis_1 
+    if y_axis_1 == 'None':
+       y_axis = filter
+    else:
+       y_axis = y_axis_1 
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

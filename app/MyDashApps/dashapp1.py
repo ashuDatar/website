@@ -483,10 +483,10 @@ def toggle_container(toggle_value):
     [dash.dependencies.Input('url', 'pathname')])
 def set_y_value(pathame):
     des = str(pathname)
-	filter = des.split('/')[-1]
+    filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
     metric = file[file['Description'] == filter].Metric.unique()
-	return metric    
+    return metric    
 
 layout = DashServer.layout
 

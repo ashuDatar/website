@@ -371,9 +371,11 @@ DashServer.title = 'States of India'
 @DashServer.callback(
     dash.dependencies.Output('text', 'children'),
     [dash.dependencies.Input('chart_type', 'value'),
-     dash.dependencies.Input('url', 'pathname')
+     dash.dependencies.Input('url', 'pathname'),
+     dash.dependencies.Input('select_x_axis', 'value'),
+     dash.dependencies.Input('select_y_axis', 'value')
     ])
-def update_output(chart_type, pathname):
+def update_output(chart_type, pathname,select_x_axis,select_y_axis):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
@@ -386,7 +388,9 @@ def update_output(chart_type, pathname):
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source))
+        html.H6('Source:{}'.format(source),
+        html.H6('x-axis:{}'.format(select_x_axis),
+        html.H6('y-axis:{}'.format(select_y_axis) )
          ])
 
 
@@ -416,10 +420,10 @@ def update_output(chart_type, pathname, state,transformation,select_x_axis,selec
     x_axis = 'Date'
     #else:
     #   x_axis =  select_x_axis 
-    if select_y_axis == 'None':
-       y_axis = filter
-    else:
-       y_axis = select_y_axis  
+    #if select_y_axis == 'None':
+    y_axis = filter
+    #else:
+    #   y_axis = select_y_axis  
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

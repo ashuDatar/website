@@ -35,7 +35,7 @@ x_axis_list.append('Date')
 
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     #data_chart = file
-    data_chart = file[file['Description'] == y_axis]
+    data_chart = file[file['Metric'] == y_axis]
     state_list = state
     if (transformation == 'rebase'):
         data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
@@ -417,7 +417,8 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
- 
+    x_axis = 'Date'
+    y_axis = metric
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

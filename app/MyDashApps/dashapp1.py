@@ -385,6 +385,10 @@ def update_output(chart_type, pathname,select_x_axis,select_y_axis):
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     category = file[file['Description'] == filter].Category.unique()
     source = file[file['Description'] == filter].Source.unique()
+    if select_y_axis == 'None':
+       y_axis = 'abcd'
+    else:
+       y_axis = select_y_axis  
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),

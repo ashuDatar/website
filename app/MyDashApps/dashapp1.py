@@ -417,22 +417,7 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
-    if x_axis_1 == 'Date':
-       x_axis = 'Date'
-       if y_axis_1 == 'None':
-          y_axis = filter
-          file = file[file['Metric'] == metric]
-       else:
-          y_axis = y_axis_1
-          file = file[file['Metric'] == y_axis]
-    else:
-       x_axis =  x_axis_1
-       if y_axis_1 == 'None':
-          y_axis = filter
-          file[(file['Description'] == y_axis) | (file['Metric'] == x_axis) ] 
-       else:
-          y_axis = y_axis_1
-          file[(file['Metric'] == y_axis) | (file['Metric'] == x_axis) ]
+ 
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)

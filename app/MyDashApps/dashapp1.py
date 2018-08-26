@@ -75,10 +75,10 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
         for j in y_axis:
             for i in state_list:
                 trace = go.Scatter(
-                    x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
+                    x=data_chart[data_chart['Metric'] == j]['Date'],
                     #y=data_chart[data_chart['Description'] == y_axis][i],
                     #y=data_chart[i],
-                    y=data_chart[data_chart['Metric'] == y_axis[j]][i],
+                    y=data_chart[data_chart['Metric'] == j][i],
                     text= i,
                     mode='markers',
                     opacity=0.7,
@@ -93,8 +93,8 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
             for j in y_axis:
                 for i in state_list:
                     trace = go.Scatter(
-                            x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
-                            y=data_chart[data_chart['Metric'] == y_axis[j]][i],
+                            x=data_chart[data_chart['Metric'] == j]['Date'],
+                            y=data_chart[data_chart['Metric'] == j][i],
                             text= i,
                             mode = 'lines',
                             opacity=0.7,
@@ -105,8 +105,8 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                 for j in y_axis:  
                      for i in state_list:
                          trace = go.Bar(
-                            x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
-                            y=data_chart[data_chart['Metric'] == y_axis[j]][i],
+                            x=data_chart[data_chart['Metric'] == j]['Date'],
+                            y=data_chart[data_chart['Metric'] == j][i],
                             text= i,
                             opacity=0.7,
                             name=i  ) 

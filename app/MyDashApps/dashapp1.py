@@ -36,9 +36,9 @@ x_axis_list.append('Date')
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     #data_chart = file
     if x_axis == 'Date':
-       data_chart = file[file['Metric'] == y_axis]
+       data_chart = file[file['Metric'].isin(y_axis)]
     else:    
-       data_chart = file[(file['Metric'] == x_axis) | (file['Metric'] == y_axis)]
+       data_chart = file[(file['Metric'] == x_axis) | (file['Metric'].isin(y_axis))]
     state_list = state
     if (transformation == 'rebase'):
         data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
@@ -287,7 +287,8 @@ DashServer.layout =  html.Div([
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    value='None'
+                    values=['None'],
+                    multi=True 
                         )
             ],
            className='two columns',

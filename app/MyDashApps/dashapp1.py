@@ -287,10 +287,10 @@ DashServer.layout =  html.Div([
         [
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
-                    id='y_axis_1'#,
-                    #options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    #value=['None'],
-                    #multi=True 
+                    id='y_axis_1',
+                    options=[{'label': k, 'value': k} for k in y_axis_list],               
+                    value=['None'],
+                    multi=True 
                         )
             ],
            className='two columns',
@@ -383,7 +383,7 @@ DashServer.title = 'States of India'
      dash.dependencies.Input('x_axis_1', 'value'),
      dash.dependencies.Input('y_axis_2', 'value')
     ])
-def update_output(chart_type, pathname,x_axis_1,y_axis_1):
+def update_output(chart_type, pathname,x_axis_1,y_axis_2):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
@@ -397,7 +397,7 @@ def update_output(chart_type, pathname,x_axis_1,y_axis_1):
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
         html.H6('Source:{}'.format(source)),
-        html.H6('Source:{}'.format(y_axis_1)), 
+        html.H6('Source:{}'.format(y_axis_2)), 
          ])
 
 
@@ -491,7 +491,7 @@ def set_y_value(pathame):
     return metric    
 
 @DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'options'),
+    dash.dependencies.Output('y_axis_2', 'options'),
     [dash.dependencies.Input('url', 'pathname')])
 def set_y_value(pathame):
     return [{'label': i, 'value': i} for i in y_axis_list]

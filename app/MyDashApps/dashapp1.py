@@ -494,7 +494,7 @@ def set_y_value(pathame):
     dash.dependencies.Output('y_axis_1', 'options'),
     [dash.dependencies.Input('url', 'pathname')])
 def set_y_value(pathame):
-    return metric [{'label': i, 'value': i} for i in y_axis_list]
+    return [{'label': i, 'value': i} for i in y_axis_list]
 
 layout = DashServer.layout
 

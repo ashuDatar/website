@@ -68,17 +68,17 @@ def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):
             dataPanda = create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
     return dataPanda
 
-
-
 def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
     #x=data_chart[data_chart['Description'] == y_axis]['Date']
-    x=data_chart['Date'] 
+    #x=data_chart['Date'] 
     if (chart_type == 'scatter'): 
+        for j in y_axis:
             for i in state_list:
                 trace = go.Scatter(
-                    x=x,
+                    x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
                     #y=data_chart[data_chart['Description'] == y_axis][i],
-                    y=data_chart[i],
+                    #y=data_chart[i],
+                    y=data_chart[data_chart['Metric'] == y_axis[j]][i],
                     text= i,
                     mode='markers',
                     opacity=0.7,
@@ -90,10 +90,11 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                 dataPanda.append(trace)
     else:            
         if (chart_type == 'line'): 
-            for i in state_list:
+            for j in y_axis:
+                for i in state_list:
                     trace = go.Scatter(
-                            x=x,
-                            y=data_chart[i],
+                            x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
+                            y=data_chart[data_chart['Metric'] == y_axis[j]][i],
                             text= i,
                             mode = 'lines',
                             opacity=0.7,
@@ -101,14 +102,15 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                     dataPanda.append(trace)
         else:            
             if (chart_type == 'bar'): 
-                for i in state_list:
-                        trace = go.Bar(
-                            x=x,
-                            y=data_chart[i],
+                for j in y_axis:  
+                     for i in state_list:
+                         trace = go.Bar(
+                            x=data_chart[data_chart['Metric'] == y_axis[j]]['Date'],
+                            y=data_chart[data_chart['Metric'] == y_axis[j]][i],
                             text= i,
                             opacity=0.7,
                             name=i  ) 
-                        dataPanda.append(trace)            
+                         dataPanda.append(trace)            
     return dataPanda
 
 

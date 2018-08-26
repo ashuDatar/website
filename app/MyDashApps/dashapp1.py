@@ -409,8 +409,8 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
-    #data = db.session.query(test_data_dummy_data)
-    #file = pd.read_sql(data.statement, data.session.bind)
+    data = db.session.query(test_data_dummy_data)
+    file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
     #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))

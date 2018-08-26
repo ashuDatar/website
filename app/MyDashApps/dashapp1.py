@@ -420,7 +420,7 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame.from_dict(datatable, orient='index')
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
-    x_axis = 'Date'
+    x_axis = x_axis_1
     if y_axis_1 == 'None':
           y_axis = metric[0]
     else:        

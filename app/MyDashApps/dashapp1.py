@@ -425,10 +425,11 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
     x_axis = x_axis_1
-    if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
-          y_axis = [metric[0]]
-    else:        
-          y_axis = y_axis_1
+    y_axis = y_axis_1
+    #if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
+    #      y_axis = [metric[0]]
+    #else:        
+    #      y_axis = y_axis_1
     transformation = transformation
     dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
     layout = create_layout(x_axis,y_axis)
@@ -486,8 +487,8 @@ def set_y_value(pathame):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
-    metric = file[file['Description'] == filter].Metric.unique()
-    return metric[0]    
+    metric = file[file['Description'] == filter].Metric.unique().tolist()
+    return metric    
 
 @DashServer.callback(
     dash.dependencies.Output('y_axis_1', 'options'),

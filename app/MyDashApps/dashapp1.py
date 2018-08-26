@@ -396,8 +396,7 @@ def update_output(chart_type, pathname,x_axis_1,y_axis_2):
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source)),
-        html.H6('Source:{}'.format(y_axis_1[0])) 
+        html.H6('Source:{}'.format(source))
          ])
 
 

@@ -267,7 +267,7 @@ DashServer.layout =  html.Div([
         [
             html.P('Choose x-axis:'), 
             dcc.Dropdown(
-                    id='x_axis',
+                    id='x_axis_1',
                     options=[{'label': k, 'value': k} for k in x_axis_list],               
                     value='Date'
                         )
@@ -280,7 +280,7 @@ DashServer.layout =  html.Div([
         [
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
-                    id='y_axis',
+                    id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],               
                     value='None'
                         )
@@ -372,10 +372,10 @@ DashServer.title = 'States of India'
     dash.dependencies.Output('text', 'children'),
     [dash.dependencies.Input('chart_type', 'value'),
      dash.dependencies.Input('url', 'pathname'),
-     dash.dependencies.Input('select_x_axis', 'value'),
-     dash.dependencies.Input('select_y_axis', 'value')
+     dash.dependencies.Input('x_axis_1', 'value'),
+     dash.dependencies.Input('y_axis_1', 'value')
     ])
-def update_output(chart_type, pathname,select_x_axis,select_y_axis):
+def update_output(chart_type, pathname,x_axis_1,y_axis_1):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)
@@ -385,16 +385,16 @@ def update_output(chart_type, pathname,select_x_axis,select_y_axis):
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
     category = file[file['Description'] == filter].Category.unique()
     source = file[file['Description'] == filter].Source.unique()
-    if select_y_axis == 'None':
-       select_y_axis = filter
+    if y_axis_1 == 'None':
+       y_axis = filter
     else:
-       select_y_axis = select_y_axis  
+       y_axis = y_axis_1 
     return html.Div([
         html.H3('Visualization for {}'.format(filter)),
         html.H4('Series:{}'.format(category)),
         html.H6('Source:{}'.format(source)),
-        html.H6('x-axis:{}'.format(select_x_axis)),
-        html.H6('y-axis:{}'.format(select_y_axis))
+        html.H6('x-axis:{}'.format(x_axis_1)),
+        html.H6('y-axis:{}'.format(y_axis_1))
          ])
 
 
@@ -405,10 +405,10 @@ def update_output(chart_type, pathname,select_x_axis,select_y_axis):
      dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input ('state', 'values'),
      dash.dependencies.Input ('transform', 'value'),
-     dash.dependencies.Input('select_x_axis', 'value'),
-     dash.dependencies.Input('select_y_axis', 'value')
+     dash.dependencies.Input('x_axis_1', 'value'),
+     dash.dependencies.Input('y_axis_1', 'value')
     ])
-def update_output(chart_type, pathname, state,transformation,select_x_axis,select_y_axis):
+def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     des = str(pathname)
     #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
     filter = des.split('/')[-1]

@@ -35,7 +35,10 @@ x_axis_list.append('Date')
 
 def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     #data_chart = file
-    data_chart = file[file['Metric'] == y_axis]
+    if x_axis == 'Date':
+       data_chart = file[file['Metric'] == y_axis]
+    else:    
+       data_chart = file[(file['Metric'] == x_axis) | (file['Metric'] == y_axis)]
     state_list = state
     if (transformation == 'rebase'):
         data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
@@ -113,8 +116,8 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
     if (chart_type == 'scatter'): 
             for i in state_list:
                 trace = go.Scatter(
-                    x=data_chart[i],
-                    y=data_chart[i],
+                    x=data_chart[data_chart['Metric'] == x_axis][i],
+                    y=data_chart[data_chart['Metric'] == y_axis][i],
                     text= i,
                     mode='markers',
                     opacity=0.7,

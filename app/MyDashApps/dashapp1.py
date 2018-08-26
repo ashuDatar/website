@@ -422,7 +422,7 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
     x_axis = x_axis_1
-    if y_axis_1 == 'None':
+    if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
           y_axis = [metric[0]]
     else:        
           y_axis = y_axis_1

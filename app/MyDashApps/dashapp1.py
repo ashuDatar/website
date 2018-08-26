@@ -289,7 +289,7 @@ DashServer.layout =  html.Div([
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    value=['None'],
+                    #value=['None'],
                     multi=True 
                         )
             ],
@@ -476,7 +476,17 @@ def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
     else:
-        return {'display': 'block'}        
+        return {'display': 'block'}  
+    
+@app.callback(
+    dash.dependencies.Output('y_axis_1', 'value'),
+    [dash.dependencies.Input('url', 'pathname')])
+def set_y_value(pathame):
+    des = str(pathname)
+	filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
+    metric = file[file['Description'] == filter].Metric.unique()
+	return metric    
 
 layout = DashServer.layout
 

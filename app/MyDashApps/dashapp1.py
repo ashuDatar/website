@@ -41,10 +41,7 @@ x_axis_list.append('Date')
 
 # In[ ]:
 
-
-
-
-def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
+def select_chart(x_axis,y_axis,chart_type,state,transformation) :
     #data_chart = file
     if x_axis == 'Date':
        data_chart = file[file['Metric'].isin(y_axis)]
@@ -68,9 +65,6 @@ def select_chart(x_axis,y_axis,chart_type,file,state,transformation) :
     #for i in range(0,36):
         #dataPanda[i]['visible'] = False
     return dataPanda
-     
-
-    
 
 def create_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list):    
     if (x_axis == 'Date'):
@@ -124,7 +118,6 @@ def create_date_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) 
                          dataPanda.append(trace)            
     return dataPanda
 
-
 def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list) : 
     if (chart_type == 'scatter'): 
             for i in state_list:
@@ -163,32 +156,17 @@ def create_other_trace(data_chart,x_axis,y_axis,chart_type,dataPanda,state_list)
                             dataPanda.append(trace)            
     return dataPanda
 
-
-
-    
-
-def create_layout(x_axis,y_axis) : 
-
+def create_layout() : 
     layout =  go.Layout(
-
                # autosize=False,
-
                # width=1000,
-
                 height=700,
-
-                xaxis = dict(title= x_axis),
-
-                yaxis=dict(title=y_axis),
-
+                #xaxis = dict(title= x_axis),
+                #yaxis=dict(title=y_axis),
                 #legend=dict(orientation="h"),
-               
                 hovermode='closest',
-              
                 showlegend=True
-
             )
-
     return layout
 
 
@@ -254,16 +232,16 @@ DashServer.layout =    html.Div([
    
       html.Div(
         [ 
-      # html.Div(
-      #  [
-       #     dcc.Graph(id='example-graph',
+       html.Div(
+        [
+            dcc.Graph(id='example-graph',
                               #animate=True, 
-       #                       style={'margin-top': '20'}
-       #                       , config = {'showLink': True} 
+                              style={'margin-top': '20'}
+                              , config = {'showLink': True} 
                               #,config={'displayModeBar': False}
-       #              )
-       # ], className='ten    columns',
-       #     ),
+                     )
+        ], className='ten    columns',
+            ),
             
            html.Div(id='transform series', children=
         [
@@ -405,6 +383,42 @@ def update_output(pathname, val):
            html.H6('Source:{}'.format(val))
          ])
 
+
+@DashServer.callback(
+    dash.dependencies.Output('example-graph', 'figure'),
+    [dash.dependencies.Input('chart_type', 'value'),
+     #dash.dependencies.Input('datatable', 'rows'),
+     dash.dependencies.Input('url', 'pathname'),
+     dash.dependencies.Input ('state', 'values'),
+     dash.dependencies.Input ('transform', 'value'),
+     dash.dependencies.Input('x_axis_1', 'value'),
+     dash.dependencies.Input('y_axis_1', 'value')
+    ])
+def update_output(chart_type, pathname, state,transformation,x_axis_1,val):
+    #des = str(pathname)
+    des = str('Number of functioning offices of scheduled commercial banks as of end of period')
+    filter = des
+    #data = db.session.query(test_data_dummy_data)
+    #file = pd.read_sql(data.statement, data.session.bind)
+    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
+    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
+    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
+    #file = pd.DataFrame.from_dict(datatable, orient='index')
+    #file = pd.DataFrame(rows)
+    metric = file[file['Description'] == filter].Metric.unique()
+    x_axis = x_axis_1
+    #y_axis = y_axis_1
+    y_axis = val
+    #if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
+    #      y_axis = [metric[0]]
+    #else:        
+    #      y_axis = y_axis_1
+    transformation = transformation
+    dataPanda = select_chart(x_axis,y_axis,chart_type,state,transformation)
+    layout = create_layout()
+    figure = {'data': dataPanda,
+              'layout': layout}
+    return figure
 
 # In[ ]:
 

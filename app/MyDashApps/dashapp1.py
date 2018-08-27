@@ -203,7 +203,7 @@ DashServer.layout =  html.Div([
     
      html.Div(id='text'),
      
-     html.Div(id='metric'), 
+     html.Div(id='metric', style={'display': 'none'}), 
     
      #dcc.Location(id='url', refresh=False),
     
@@ -291,7 +291,7 @@ DashServer.layout =  html.Div([
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    value=['None'],
+                    value=metric,
                     multi=True 
                         )
             ],

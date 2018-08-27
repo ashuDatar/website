@@ -194,7 +194,7 @@ def create_layout(x_axis,y_axis) :
 
 DashServer.layout =    html.Div([
         #html.H3(expensive_data),
-        dcc.Location(id='url', refresh=False),
+        #dcc.Location(id='url', refresh=False),
         
          html.Div(
         [

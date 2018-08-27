@@ -12,11 +12,22 @@ from flask import Flask, render_template
 from app.server import db
 from app.models import test_data_dummy_data
 import urllib
+from flask_caching import Cache
 #import sd_material_ui
 #import dash_table_experiments as dt
 
 # In[2]:
 
+cache = Cache(DashServer.server, config={
+    'CACHE_TYPE': 'filesystem',
+    'CACHE_DIR': 'cache'
+})
+
+timeout = 20
+
+@cache.memoize(timeout=timeout)
+def compute_expensive_data():
+    return (file['Metric'].unique().tolist())
 
 data = db.session.query(test_data_dummy_data)
 file = pd.read_sql(data.statement, data.session.bind)
@@ -180,10 +191,11 @@ def create_layout(x_axis,y_axis) :
 
     return layout
 
-
-DashServer.layout =  html.Div([
+def generate_layout():
+    metric_list = compute_expensive_data()
+    html.Div([
     # title row
-    html.Div(
+      html.Div(
         [
             html.H3(
                 'States of India-Explore states of India',
@@ -205,6 +217,7 @@ DashServer.layout =  html.Div([
      
      html.Div(id='metric'#, style={'display': 'none'}
              ), 
+     html.H3('Last updated at: ' + metric_list),   
          
      #dcc.Location(id='url', refresh=False),
     
@@ -233,7 +246,7 @@ DashServer.layout =  html.Div([
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],
-                    value= select_y_axis,
+                    value= [None],
                     multi=True 
                         )
             ],
@@ -495,6 +508,6 @@ def set_y_value(option,metric):
 
 
     
-layout = DashServer.layout
+layout = generate_layout
 
     

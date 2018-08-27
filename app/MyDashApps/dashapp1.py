@@ -18,16 +18,16 @@ from flask_caching import Cache
 
 # In[2]:
 
-cache = Cache(DashServer.server, config={
-    'CACHE_TYPE': 'filesystem',
-    'CACHE_DIR': 'cache'
-})
+#cache = Cache(DashServer.server, config={
+#    'CACHE_TYPE': 'filesystem',
+#    'CACHE_DIR': 'cache'
+#})
 
-timeout = 20
+#timeout = 20
 
-@cache.memoize(timeout=timeout)
-def compute_expensive_data():
-    return (file['Metric'].unique().tolist())
+#@cache.memoize(timeout=timeout)
+#def compute_expensive_data():
+#    return (file['Metric'].unique().tolist())
 
 data = db.session.query(test_data_dummy_data)
 file = pd.read_sql(data.statement, data.session.bind)
@@ -192,7 +192,7 @@ def create_layout(x_axis,y_axis) :
     return layout
 
 def generate_layout():
-    metric_list = compute_expensive_data()
+    #metric_list = compute_expensive_data()
     return html.Div([
     # title row
       html.Div(
@@ -215,10 +215,6 @@ def generate_layout():
     
      html.Div(id='text'),
      
-     html.Div(id='metric'#, style={'display': 'none'}
-             ), 
-     html.H3(metric_list),   
-         
      #dcc.Location(id='url', refresh=False),
     
     #sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
@@ -243,12 +239,7 @@ def generate_layout():
         html.Div(id = 'select_y_axis', children =
         [
             html.P('Choose y-axis:'), 
-            dcc.Dropdown(
-                    id='y_axis_1',
-                    options=[{'label': k, 'value': k} for k in metric_list],
-                    value= metric_list[0],
-                    multi=True 
-                        )
+            html.Div(id = 'y_axis_1')
             ],
            className='six columns',
            style={'margin-top': '10'}
@@ -382,14 +373,6 @@ def generate_layout():
 
 
 
-DashServer.css.append_css({'external_url':
-
-#                 'https://cdn.rawgit.com/gschivley/8040fc3c7e11d2a4e7f0589ffc829a02/raw/fe763af6be3fc79eca341b04cd641124de6f6f0d/dash.css'
-
-                  'https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css'
-
-               })
-
 DashServer.title = 'States of India'
 
 @DashServer.callback(
@@ -440,7 +423,7 @@ def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
     #file = pd.DataFrame(rows)
     metric = file[file['Description'] == filter].Metric.unique()
     x_axis = x_axis_1
-    y_axis = y_axis_1
+    y_axis = [metric[0]]
     #if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
     #      y_axis = [metric[0]]
     #else:        
@@ -488,7 +471,7 @@ def toggle_container(toggle_value):
         return {'display': 'block'}    
     
 @DashServer.callback(
-    dash.dependencies.Output('metric', 'children'),
+    dash.dependencies.Output('y_axis_1', 'children'),
     [dash.dependencies.Input('url', 'pathname')
     ])
 def set_y_value(pathname):
@@ -497,16 +480,11 @@ def set_y_value(pathname):
     filter = urllib.parse.unquote(filter)
     metric = file[file['Description'] == filter].Metric.unique().tolist()
     return html.Div([
-        html.H6('Metric {}'.format(metric))])	
-
-@DashServer.callback(
-    dash.dependencies.Output('select_y_axis', 'children'),
-    [dash.dependencies.Input('y_axis_1', 'options'),
-     dash.dependencies.Input('metric', 'value')])
-def set_y_value(option,metric):
-    return metric
-
-
+                dcc.Dropdown(options=[{'label': k, 'value': k} for k in (file['Metric'].unique().tolist())],
+                    value= [filter],
+                    multi=True 
+                        )
+                    ])	
     
 layout = generate_layout
 

@@ -232,8 +232,9 @@ DashServer.layout =  html.Div([
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
                     id='y_axis_1',
-                    options=[{'label': k, 'value': k} for k in y_axis_list]#,
+                    options=[{'label': k, 'value': k} for k in y_axis_list],
                     #value=['None']
+                     multi=True 
                         )
             ],
            className='six columns',

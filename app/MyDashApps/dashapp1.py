@@ -204,7 +204,7 @@ DashServer.layout =  html.Div([
      html.Div(id='text'),
      
      html.Div(id='metric', style={'display': 'none'}), 
-    
+         
      #dcc.Location(id='url', refresh=False),
     
     #sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
@@ -226,6 +226,8 @@ DashServer.layout =  html.Div([
            className='ten columns',
            style={'margin-top': '10'}
      ),
+     
+     dcc.Dropdown(id='y_axis_1'),       
             
       html.Div(
         [ 
@@ -284,21 +286,6 @@ DashServer.layout =  html.Div([
            className='two columns',
            #style={'margin-top': '10'}
        ),    
-            
-       html.Div(id='select_y_axis', children=
-        [
-            html.P('Choose y-axis:'), 
-            dcc.Dropdown(
-                    id='y_axis_1',
-                    options=[{'label': k, 'value': k} for k in y_axis_list],               
-                    value=metric,
-                    multi=True 
-                        )
-            ],
-           className='two columns',
-           #style={'margin-top': '10'}
-        ),
-            
             
        html.Div(id='output-container-button', children=
         [      
@@ -473,14 +460,6 @@ def toggle_container(toggle_value):
     else:
         return {'display': 'block'}    
     
-    
-@DashServer.callback(Output('select_y_axis', 'style'), [Input('toggle', 'value')])
-def toggle_container(toggle_value):
-    if toggle_value == 'Hide Edit Options':
-        return {'display': 'none'}
-    else:
-        return {'display': 'block'}
-    
 @DashServer.callback(
     dash.dependencies.Output('metric', 'children'),
     [dash.dependencies.Input('url', 'pathname')
@@ -492,6 +471,19 @@ def set_y_value(pathname):
     metric = file[file['Description'] == filter].Metric.unique().tolist()
     return html.Div([
         html.H6('Metric {}'.format(metric))])	
+
+@DashServer.callback(
+    dash.dependencies.Output('y_axis_1', 'options'),
+    [dash.dependencies.Input('metric', 'value')])
+def set_y_value(metric):
+    return [{'label': i, 'value': i} for i in metric]
+
+
+@DashServer.callback(
+    dash.dependencies.Output('y_axis_1', 'value'),
+    [dash.dependencies.Input('y_axis_1', 'options')])
+def set_y_value(metric):
+    return [{'label': i, 'value': i} for i in metric]
     
 layout = DashServer.layout
 

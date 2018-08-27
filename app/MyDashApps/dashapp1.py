@@ -217,7 +217,7 @@ def generate_layout():
      
      html.Div(id='metric'#, style={'display': 'none'}
              ), 
-     html.H3('Last updated at: ' + metric_list),   
+     html.H3(metric_list),   
          
      #dcc.Location(id='url', refresh=False),
     
@@ -245,8 +245,8 @@ def generate_layout():
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
                     id='y_axis_1',
-                    options=[{'label': k, 'value': k} for k in y_axis_list],
-                    value= [None],
+                    options=[{'label': k, 'value': k} for k in metric_list],
+                    value= metric_list[0],
                     multi=True 
                         )
             ],

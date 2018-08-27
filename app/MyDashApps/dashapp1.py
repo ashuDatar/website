@@ -482,7 +482,7 @@ def toggle_container(toggle_value):
         return {'display': 'block'}
     
 @DashServer.callback(
-    dash.dependencies.Output('metric', 'value'),
+    dash.dependencies.Output('metric', 'children'),
     [dash.dependencies.Input('url', 'pathname')
     ])
 def set_y_value(pathame):

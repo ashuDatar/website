@@ -202,6 +202,8 @@ DashServer.layout =  html.Div([
     #html.Div( dt.DataTable(id='datatable', rows=[{}]) ),  
     
      html.Div(id='text'),
+     
+     html.Div(id='metric'), 
     
      #dcc.Location(id='url', refresh=False),
     
@@ -477,7 +479,19 @@ def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
     else:
-        return {'display': 'block'}  
+        return {'display': 'block'}
+    
+@DashServer.callback(
+    dash.dependencies.Output('metric', 'value'),
+    [dash.dependencies.Input('url', 'pathname')
+    ])
+def set_y_value(pathame):
+    des = str(pathname)
+    filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
+    metric = file[file['Description'] == filter].Metric.unique().tolist()
+    return html.Div([
+        html.H6('Metric {}'.format(metric)),
     
 layout = DashServer.layout
 

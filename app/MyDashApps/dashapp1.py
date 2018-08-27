@@ -191,11 +191,12 @@ def create_layout(x_axis,y_axis) :
 
     return layout
 
-def generate_layout():
-    #metric_list = compute_expensive_data()
-    return html.Div([
-    # title row
-      html.Div(
+
+DashServer.layout =    html.Div([
+        #html.H3(expensive_data),
+        dcc.Location(id='url', refresh=False),
+        
+         html.Div(
         [
             html.H3(
                 'States of India-Explore states of India',
@@ -208,18 +209,9 @@ def generate_layout():
 
          className='row'
         ),
-    # Select visualization
-
-
-    #html.Div( dt.DataTable(id='datatable', rows=[{}]) ),  
     
-     html.Div(id='text'),
-     
-     #dcc.Location(id='url', refresh=False),
-    
-    #sd_material_ui.FlatButton(id='input', label='Click me', backgroundColor='orange'),
-    # selectors
-
+       html.Div(id='text'),
+        
      html.Div(
         [
          html.Div(
@@ -233,7 +225,7 @@ def generate_layout():
                     value='bar'
                         )
             ],
-           className='six columns',
+           className='five columns',
            style={'margin-top': '10'}
      ),
         html.Div(id = 'select_y_axis', children =
@@ -241,13 +233,11 @@ def generate_layout():
             html.P('Choose y-axis:'), 
             html.Div(id = 'y_axis_1')
             ],
-           className='six columns',
+           className='five columns',
            style={'margin-top': '10'}
-     ),	
-     
-          
-            
-      html.Div(
+     ),
+ 
+    html.Div(
         [ 
        dcc.RadioItems(
         id='toggle',
@@ -261,20 +251,19 @@ def generate_layout():
 
         ], className='row'
    ),
-
-  #chart
-    html.Div(
+   
+      html.Div(
         [ 
-       html.Div(
-        [
-            dcc.Graph(id='example-graph',
+      # html.Div(
+      #  [
+       #     dcc.Graph(id='example-graph',
                               #animate=True, 
-                              style={'margin-top': '20'}
-                              , config = {'showLink': True} 
+       #                       style={'margin-top': '20'}
+       #                       , config = {'showLink': True} 
                               #,config={'displayModeBar': False}
-                     )
-        ], className='ten    columns',
-            ),
+       #              )
+       # ], className='ten    columns',
+       #     ),
             
            html.Div(id='transform series', children=
         [
@@ -367,73 +356,57 @@ def generate_layout():
             # style={'margin-top': '20'} 
             ),
 
-   # dcc.Markdown('Created by [Ashutosh Datar](https://twitter.com/adatar)'))
-], className='ten columns offset-by-one')    
+        
+    ])
+
+
+# In[6]:
 
 
 
+# In[7]:
 
-DashServer.title = 'States of India'
+
+# In[8]:
+
+
+@DashServer.callback(
+    dash.dependencies.Output('y_axis_1', 'children'),
+    [dash.dependencies.Input('url', 'pathname')])
+def set_y_value(pathname):
+    des = str(pathname)
+    filter = des.split('/')[-1]
+    filter = urllib.parse.unquote(filter)
+    metric = file[file['Description'] == filter].Metric.unique().tolist()
+    val = metric[0]
+    return html.Div([
+         dcc.Dropdown(id='y_axis_1',options=[{'label': k, 'value': k} for k in (file['Metric'].unique().tolist())],
+                    value= [val],
+                    multi=True 
+                        )
+        ])
+
+
+# In[9]:
+
 
 @DashServer.callback(
     dash.dependencies.Output('text', 'children'),
-    [dash.dependencies.Input('chart_type', 'value'),
-     dash.dependencies.Input('url', 'pathname'),
-     dash.dependencies.Input('x_axis_1', 'value'),
+    [dash.dependencies.Input('url', 'pathname'),
      dash.dependencies.Input('y_axis_1', 'value')
     ])
-def update_output(chart_type, pathname,x_axis_1,y_axis_2):
-    des = str(pathname)
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
+def update_output(pathname, val):
+    #des = str(pathname)
     #file = pd.DataFrame(rows)
     #data = db.session.query(test_data_dummy_data)
     #file = pd.read_sql(data.statement, data.session.bind)
     #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    category = file[file['Description'] == filter].Category.unique()
-    source = file[file['Description'] == filter].Source.unique()
     return html.Div([
-        html.H3('Visualization for {}'.format(filter)),
-        html.H4('Series:{}'.format(category)),
-        html.H6('Source:{}'.format(source))
+           html.H6('Source:{}'.format(val))
          ])
 
 
-@DashServer.callback(
-    dash.dependencies.Output('example-graph', 'figure'),
-    [dash.dependencies.Input('chart_type', 'value'),
-     #dash.dependencies.Input('datatable', 'rows'),
-     dash.dependencies.Input('url', 'pathname'),
-     dash.dependencies.Input ('state', 'values'),
-     dash.dependencies.Input ('transform', 'value'),
-     dash.dependencies.Input('x_axis_1', 'value'),
-     dash.dependencies.Input('y_axis_1', 'value')
-    ])
-def update_output(chart_type, pathname, state,transformation,x_axis_1,y_axis_1):
-    des = str(pathname)
-    #des = str('Outstanding loans of Scheduled commercial banks  in semi urban areas')
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
-    #data = db.session.query(test_data_dummy_data)
-    #file = pd.read_sql(data.statement, data.session.bind)
-    #file = pd.read_csv('Test_Data_Dummy_Data.csv')
-    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : x.astype('float'))
-    #file.iloc[:,15:51] = file.iloc[:,16:52].apply(lambda x : round(x, 2))
-    #file = pd.DataFrame.from_dict(datatable, orient='index')
-    #file = pd.DataFrame(rows)
-    metric = file[file['Description'] == filter].Metric.unique()
-    x_axis = x_axis_1
-    y_axis = [metric[0]]
-    #if ((y_axis_1[0] == 'None') and (len(y_axis_1) == 1)):
-    #      y_axis = [metric[0]]
-    #else:        
-    #      y_axis = y_axis_1
-    transformation = transformation
-    dataPanda = select_chart(x_axis,y_axis,chart_type,file,state,transformation)
-    layout = create_layout(x_axis,y_axis)
-    figure = {'data': dataPanda,
-              'layout': layout}
-    return figure
+# In[ ]:
 
 
 @DashServer.callback(Output('controls-container', 'style'), [Input('button','n_clicks'), Input('toggle', 'value')])
@@ -445,8 +418,7 @@ def toggle_container(n_clicks, toggle_value):
            return {'display': 'none'} 
     else:
         return {'display': 'none'}
-
-
+    
 @DashServer.callback(Output('transform series', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
@@ -454,38 +426,25 @@ def toggle_container(toggle_value):
     else:
         return {'display': 'block'}
     
-   
-
 @DashServer.callback(Output('output-container-button', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
     else:
         return {'display': 'block'}
-    
+
 @DashServer.callback(Output('select_x_axis', 'style'), [Input('toggle', 'value')])
 def toggle_container(toggle_value):
     if toggle_value == 'Hide Edit Options':
         return {'display': 'none'}
     else:
-        return {'display': 'block'}    
-    
-@DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'children'),
-    [dash.dependencies.Input('url', 'pathname')
-    ])
-def set_y_value(pathname):
-    des = str(pathname)
-    filter = des.split('/')[-1]
-    filter = urllib.parse.unquote(filter)
-    metric = file[file['Description'] == filter].Metric.unique().tolist()
-    return html.Div([
-                dcc.Dropdown(options=[{'label': k, 'value': k} for k in (file['Metric'].unique().tolist())],
-                    value= [filter],
-                    multi=True 
-                        )
-                    ])	
-    
-layout = generate_layout
+        return {'display': 'block'}     
+
+
+# In[ ]:
+
+
+
+layout = DashServer.layout
 
     

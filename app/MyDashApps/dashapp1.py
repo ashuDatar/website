@@ -163,7 +163,7 @@ def create_layout() :
                 height=700,
                 #xaxis = dict(title= x_axis),
                 #yaxis=dict(title=y_axis),
-                #legend=dict(orientation="h"),
+                legend=dict(orientation="h"),
                 hovermode='closest',
                 showlegend=True
             )

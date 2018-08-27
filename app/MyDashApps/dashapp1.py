@@ -193,7 +193,7 @@ def create_layout(x_axis,y_axis) :
 
 def generate_layout():
     metric_list = compute_expensive_data()
-    html.Div([
+    return html.Div([
     # title row
       html.Div(
         [

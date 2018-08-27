@@ -227,7 +227,7 @@ DashServer.layout =  html.Div([
            className='six columns',
            style={'margin-top': '10'}
      ),
-        html.Div(id = select_y_axis, children =
+        html.Div(id = 'select_y_axis', children =
         [
             html.P('Choose y-axis:'), 
             dcc.Dropdown(

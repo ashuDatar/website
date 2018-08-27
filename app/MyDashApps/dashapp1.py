@@ -203,7 +203,8 @@ DashServer.layout =  html.Div([
     
      html.Div(id='text'),
      
-     html.Div(id='metric', style={'display': 'none'}), 
+     html.Div(id='metric'#, style={'display': 'none'}
+             ), 
          
      #dcc.Location(id='url', refresh=False),
     

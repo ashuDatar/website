@@ -227,14 +227,14 @@ DashServer.layout =  html.Div([
            className='six columns',
            style={'margin-top': '10'}
      ),
-        html.Div(
+        html.Div(id = select_y_axis, children =
         [
             html.P('Choose y-axis:'), 
             dcc.Dropdown(
                     id='y_axis_1',
                     options=[{'label': k, 'value': k} for k in y_axis_list],
-                    #value=['None']
-                     multi=True 
+                    value= select_y_axis,
+                    multi=True 
                         )
             ],
            className='six columns',
@@ -487,7 +487,7 @@ def set_y_value(pathname):
         html.H6('Metric {}'.format(metric))])	
 
 @DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'value'),
+    dash.dependencies.Output('select_y_axis', 'children'),
     [dash.dependencies.Input('y_axis_1', 'options'),
      dash.dependencies.Input('metric', 'value')])
 def set_y_value(option,metric):

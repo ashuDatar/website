@@ -213,7 +213,7 @@ DashServer.layout =  html.Div([
 
      html.Div(
         [
-       html.Div(
+         html.Div(
         [
             html.P('Choose chart-type:'), 
             dcc.Dropdown(
@@ -224,11 +224,23 @@ DashServer.layout =  html.Div([
                     value='bar'
                         )
             ],
-           className='ten columns',
+           className='six columns',
            style={'margin-top': '10'}
      ),
+        html.Div(
+        [
+            html.P('Choose y-axis:'), 
+            dcc.Dropdown(
+                    id='y_axis_1',
+                    options=[{'label': k, 'value': k} for k in y_axis_list]#,
+                    #value=['None']
+                        )
+            ],
+           className='six columns',
+           style={'margin-top': '10'}
+     ),	
      
-     dcc.Dropdown(id='y_axis_1'),       
+          
             
       html.Div(
         [ 
@@ -474,10 +486,11 @@ def set_y_value(pathname):
         html.H6('Metric {}'.format(metric))])	
 
 @DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'options'),
-    [dash.dependencies.Input('metric', 'value')])
-def set_y_value(metric):
-    return [{'label': i, 'value': i} for i in metric]
+    dash.dependencies.Output('y_axis_1', 'value'),
+    [dash.dependencies.Input('y_axis_1', 'options'),
+     dash.dependencies.Input('metric', 'value')])
+def set_y_value(option,metric):
+    return metric
 
 
     

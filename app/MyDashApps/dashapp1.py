@@ -485,7 +485,7 @@ def toggle_container(toggle_value):
     dash.dependencies.Output('metric', 'children'),
     [dash.dependencies.Input('url', 'pathname')
     ])
-def set_y_value(pathame):
+def set_y_value(pathname):
     des = str(pathname)
     filter = des.split('/')[-1]
     filter = urllib.parse.unquote(filter)

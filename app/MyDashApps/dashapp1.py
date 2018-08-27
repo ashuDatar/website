@@ -508,6 +508,6 @@ def set_y_value(option,metric):
 
 
     
-DashServer.layout = generate_layout
+layout = generate_layout
 
     

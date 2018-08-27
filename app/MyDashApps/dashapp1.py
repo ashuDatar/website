@@ -491,7 +491,7 @@ def set_y_value(pathame):
     filter = urllib.parse.unquote(filter)
     metric = file[file['Description'] == filter].Metric.unique().tolist()
     return html.Div([
-        html.H6('Metric {}'.format(metric)),
+        html.H6('Metric {}'.format(metric))])	
     
 layout = DashServer.layout
 

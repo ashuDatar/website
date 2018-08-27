@@ -479,11 +479,6 @@ def set_y_value(metric):
     return [{'label': i, 'value': i} for i in metric]
 
 
-@DashServer.callback(
-    dash.dependencies.Output('y_axis_1', 'value'),
-    [dash.dependencies.Input('y_axis_1', 'options')])
-def set_y_value(metric):
-    return [{'label': i, 'value': i} for i in metric]
     
 layout = DashServer.layout
 

@@ -395,8 +395,8 @@ def update_output(pathname, val):
      dash.dependencies.Input('y_axis_1', 'value')
     ])
 def update_output(chart_type, pathname, state,transformation,x_axis_1,val):
-    #des = str(pathname)
-    des = str('Number of functioning offices of scheduled commercial banks as of end of period')
+    des = str(pathname)
+    #des = str('Number of functioning offices of scheduled commercial banks as of end of period')
     filter = des
     #data = db.session.query(test_data_dummy_data)
     #file = pd.read_sql(data.statement, data.session.bind)

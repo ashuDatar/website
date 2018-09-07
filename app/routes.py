@@ -70,8 +70,7 @@ DashServer.layout = html.Div([	dcc.Location(id='url', refresh=False),
 			         html.Div([    html.Link(
                                                      rel='stylesheet',
                                                      href='/static/1_style.css'
-                                                        ),
-                                 html.Div('Assets loading locally')]),
+                                                        )]),
 			              html.Div(id='page-content')])
 
 

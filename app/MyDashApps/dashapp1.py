@@ -49,7 +49,8 @@ def select_chart(x_axis,y_axis,chart_type,state,transformation) :
        data_chart = file[(file['Metric'] == x_axis) | (file['Metric'].isin(y_axis))]
     state_list = state
     if (transformation == 'rebase'):
-        data_chart.loc[:,state] = data_chart.loc[:,state]*100/data_chart.loc[data_chart.index.min(),state]
+        for i in y_axis:
+             data_chart.loc[ data_chart[(data_chart['Metric'] == i)].index,state] = data_chart.loc[ data_chart[(data_chart['Metric'] == i)].index,state]*100/data_chart.loc[ data_chart[(data_chart['Metric'] == i)].index.min(),state]
     elif (transformation == 'growth'):
         index_list = data_chart.index
         index_list = index_list[:-1]

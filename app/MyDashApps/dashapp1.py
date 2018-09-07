@@ -29,8 +29,10 @@ from flask_caching import Cache
 #def compute_expensive_data():
 #    return (file['Metric'].unique().tolist())
 
-data = db.session.query(test_data_dummy_data)
-file = pd.read_sql(data.statement, data.session.bind)
+#data = db.session.query(test_data_dummy_data)
+#file = pd.read_sql(data.statement, data.session.bind)
+
+file = pd.read_csv('Test_Data_Dummy_Data.csv')
 
 x_axis_list = file['Metric'].unique().tolist()
 y_axis_list = file['Metric'].unique().tolist()

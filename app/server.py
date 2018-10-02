@@ -23,16 +23,6 @@ babel = Babel()
 babel.init_app(AppServer)
 
 
-es_header = [{
-  'host': host,
-  'port': 443,
-  'use_ssl': True,
-  'http_auth': (auth[0],auth[1])
-}]
-
-AppServer.elasticsearch = Elasticsearch(es_header)
-
-
 #migrate = Migrate(AppServer, db)
 
 from app import routes, models
